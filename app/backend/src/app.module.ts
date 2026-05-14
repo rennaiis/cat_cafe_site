@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm'
+import { LandingDataModule } from './landing-data/landing-data.module';
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true
@@ -22,7 +23,7 @@ import {TypeOrmModule} from '@nestjs/typeorm'
         autoLoadEntities: true,
       }
     }
-  })
+  }), LandingDataModule
   ],
   controllers: [AppController],
   providers: [AppService],

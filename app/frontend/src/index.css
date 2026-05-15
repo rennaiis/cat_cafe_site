@@ -3,7 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Pangolin&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 
-
+*{
+    box-sizing: border-box;
+}
 :root{
     --page-background-color: #fff8f8;
     --dark-text-color: #855436; 
@@ -14,8 +16,16 @@
     --main-text-font: 'Shantell Sans';
     --chalk-font: 'Pangolin'
 }
-*{
-    box-sizing: border-box;
+body{
+    background-color: var(--page-background-color);
+    font-family: var(--main-text-font);
+    margin: 0px;  
+}
+nav{
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    flex-shrink: 0;
 }
 nav a{
     text-decoration: none;
@@ -29,13 +39,6 @@ header{
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
-
-body{
-    background-color: var(--page-background-color);
-    font-family: var(--main-text-font);
-    margin: 0px;
-    
 }
 button{
     background-color: var(--elements-background-color);
@@ -51,13 +54,8 @@ button:hover{
     background-color: var(--orange-color);
     color: var(--light-stroke-color)
 }
-nav{
-    display: flex;
-    gap: 8px;
-    flex-direction: row;
-    flex-shrink: 0;
 
-}
+
 .header{
     font-family: var(--header-font);
     font-size: clamp(43px,  7.5vw, 96px);
@@ -72,7 +70,6 @@ nav{
     justify-content: center;
     gap: 24px;
     width: 90%;
-    
 }
 .menu-line{
     display: flex;

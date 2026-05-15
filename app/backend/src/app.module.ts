@@ -4,6 +4,19 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { LandingDataModule } from './landing-data/landing-data.module';
+import { FilesModule } from './files/files.module';
+import { CatsModule } from './cats/cats.module';
+import { UsersModule } from './users/users.module';
+import { EmployeesModule } from './employees/employees.module';
+import { StatusesModule } from './statuses/statuses.module';
+import { ColorTypesModule } from './color_types/color_types.module';
+import { PhotosApplicationsModule } from './photos_applications/photos_applications.module';
+import { AdoptApplicationsModule } from './adopt_applications/adopt_applications.module';
+import { AdoptersModule } from './adopters/adopters.module';
+import { AnswersModule } from './answers/answers.module';
+import { QuestionsModule } from './questions/questions.module';
+import { RulesModule } from './rules/rules.module';
+import { PricesModule } from './prices/prices.module';
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true
@@ -23,7 +36,7 @@ import { LandingDataModule } from './landing-data/landing-data.module';
         autoLoadEntities: true,
       }
     }
-  }), LandingDataModule
+  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, PricesModule
   ],
   controllers: [AppController],
   providers: [AppService],

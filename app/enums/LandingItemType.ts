@@ -10,5 +10,12 @@ export enum LandingItemType{
     ABOUT_US = 'about_us', 
     VK_LINK = 'vk_link', 
     CATS_AT_HOME = 'cats_at_home', 
-    CATS_IN_CAFE = 'cats_in_cafe'
+    CATS_IN_CAFE = 'cats_in_cafe', 
+    FIRST_HOUR_PRICE_STANDART = 'first_hour_price_standart', 
+    FOLLOWING_HOURS_PRICE_STANDART = 'following_hours_price_standart', 
+    STUDENTS_PRICE = 'students_price', 
+    STUDENTS_CONDITIONS = 'students_conditions', 
+    GROUP_PEOPLE_AMOUNT = 'group_people_amount', 
+    GROUP_DISCOUNT = 'group_discount',
+    GROUP_PEOPLE_CONDITIONS = 'group_people_conditions'
 }

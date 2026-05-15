@@ -16,7 +16,6 @@ import { AdoptersModule } from './adopters/adopters.module';
 import { AnswersModule } from './answers/answers.module';
 import { QuestionsModule } from './questions/questions.module';
 import { RulesModule } from './rules/rules.module';
-import { PricesModule } from './prices/prices.module';
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true
@@ -36,7 +35,7 @@ import { PricesModule } from './prices/prices.module';
         autoLoadEntities: true,
       }
     }
-  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, PricesModule
+  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule
   ],
   controllers: [AppController],
   providers: [AppService],

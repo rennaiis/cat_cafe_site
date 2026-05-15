@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsPhoneNumber, IsString, IsUrl, Matches, ValidateIf } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsPhoneNumber, IsString, IsUrl, Matches, ValidateIf } from "class-validator";
 import { LandingItemType } from "../../../../enums/LandingItemType";
 import { iterator } from "rxjs/internal/symbol/iterator";
 
@@ -19,6 +19,10 @@ export class CreateLandingDataDto {
     @IsUrl({}, { message: 'link does not work'})
 
     @ValidateIf(o => o.type === LandingItemType.OPEN_TIME || o.type === LandingItemType.CLOSE_TIME)
-    @Matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, { message: 'wrong time format' })
-    text: string
+    @IsNumberString({}, { message: 'must be number' }) 
+    @Matches(/^(?:[0-9]|1[0-9]|2[0-4])$/, { message: 'must be between 0 and 24h' }) 
+
+    @ValidateIf(o => o.type === LandingItemType.CATS_AT_HOME || o.type === LandingItemType.CATS_IN_CAFE || o.type === LandingItemType.STUDENTS_PRICE || o.type === LandingItemType.FIRST_HOUR_PRICE_STANDART || o.type === LandingItemType.FIRST_HOUR_PRICE_STANDART || o.type === LandingItemType.GROUP_PEOPLE_AMOUNT || o.type === LandingItemType.GROUP_DISCOUNT)
+    @IsNumberString({}, {message: 'must be number'})
+    text: string;
 }

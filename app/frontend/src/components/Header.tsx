@@ -12,18 +12,18 @@ const LandingData = {
 function Header(){
     return (
         <header>
-            <div>
-                <img src={logo} alt="logo" />
-                <h1>{LandingData.cafe_name}</h1>
+            <div className='header-line'>
+                <img src={logo} alt="logo" className='logo'/>
+                <h1 className='header'>{LandingData.cafe_name}</h1>
             </div>
-            <div>
-                <img src={left_paw} alt="" />
-                <nav>
+            <div className='menu-line'>
+                <img src={left_paw} alt="" className='nav-paw'/>
+                <nav className='inline-flex'>
                     <button><NavLink to={'/'}>О нас</NavLink></button>
                     <button><NavLink to={'/cats'}>Наши котики</NavLink></button>
                     <button><NavLink to={'/gallery'}>Галерея</NavLink></button>
                 </nav>
-                <img src={right_paw} alt="" />
+                <img src={right_paw} alt="" className='nav-paw'/>
             </div>
         </header>
     )

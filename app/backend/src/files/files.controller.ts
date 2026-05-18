@@ -1,15 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
-  @Post()
-  create(@Body() createFileDto: CreateFileDto) {
-    return this.filesService.create(createFileDto);
+  @Post('upload')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      storage: diskStorage({
+        destination: './uploads', 
+        filename: (req, file, callback)=>{
+          const unique = Date.now() + '-' + Math.round(Math.random()*1e9)
+          const ext = extname(file.originalname)
+          callback(null, `${unique}${ext}`)
+        }
+      })
+    })
+  )
+  async uploadFiles(
+    @UploadedFiles() files: Express.Multer.File[], 
+    @Body() createFileDto: CreateFileDto
+  ){
+    return this.filesService.createMany(files, createFileDto)
   }
 
   @Get()
@@ -22,9 +40,9 @@ export class FilesController {
     return this.filesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
-    return this.filesService.update(+id, updateFileDto);
+  @Patch(':id/approve')
+  async approveFile(@Param('id') id: string){
+    return this.filesService.approve(+id);
   }
 
   @Delete(':id')

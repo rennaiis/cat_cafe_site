@@ -27,12 +27,12 @@ export class CreateEmployeeDto {
   @MaxLength(100)
   contact?: string;
 
-  @Transform(({ value }) => new Date(value)) // превращает строку типа "2000-01-15" в объект Date
+  @Transform(({ value }) => new Date(value)) 
   @IsDate()
   @IsNotEmpty()
   birth_date: Date;
 
-  @Transform(({ value }) => parseFloat(value)) // превращает строку "50000.50" в число
+  @Transform(({ value }) => parseFloat(value))
   @IsNumber()
   @IsNotEmpty()
   salary: number;

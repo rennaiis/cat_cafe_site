@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { hash } from 'argon2';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+  async create(createUserDto: CreateUserDto) {
+    const candidate = await this.findByLogin(createUserDto.login)
+    if (candidate != null){
+      throw new ConflictException('Пользователь с таким логином уже есть')
+    }
+    const hashedPass = await hash(createUserDto.password_hash)
+    const user = this.userRepository.create({
+      ...createUserDto, 
+      password_hash: hashedPass
+    })
+    return await this.userRepository.save(user)
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userRepository.find({
+      relations: ['employee'], 
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['employee'],
+    });
+    if (!user) throw new NotFoundException()
+    return user
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findByLogin(login: string){
+    const user = await this.userRepository.findOne({
+      where: {login: login},
+      relations: ['employee']
+    })
+    return user
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.findOne(id);
+    this.userRepository.merge(user, updateUserDto);
+  }
+
+  async remove(id: number) {
+    const user = await this.findOne(id);
+    return await this.userRepository.softRemove(user);
   }
 }

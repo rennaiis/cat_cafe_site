@@ -1,26 +1,85 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Cat } from './entities/cat.entity';
+import { Repository } from 'typeorm';
+import { Adopter } from '../adopters/entities/adopter.entity';
+import { Status } from '../statuses/entities/status.entity';
+import { ColorType } from '../color_types/entities/color_type.entity';
+import { StatusesService } from '../statuses/statuses.service';
+import { ColorTypesService } from '../color_types/color_types.service';
+import { AdoptersService } from '../adopters/adopters.service';
+import { stat } from 'fs';
 
 @Injectable()
 export class CatsService {
-  create(createCatDto: CreateCatDto) {
-    return 'This action adds a new cat';
+  constructor(
+    @InjectRepository(Cat)
+    private readonly catRepository: Repository<Cat>,
+
+    @InjectRepository(Adopter)
+    private readonly adopterService: AdoptersService, 
+    private readonly statusService: StatusesService,
+    private readonly colorTypeService: ColorTypesService,
+  ){}
+  async create(createCatDto: CreateCatDto) {
+    let colorType: ColorType | undefined
+    let status: Status | undefined
+    let adopter: Adopter | undefined
+
+    if (createCatDto.adopter_id){
+      adopter = await this.adopterService.findOne(createCatDto.adopter_id)
+    }
+    status = await this.statusService.findOne(createCatDto.status_id)
+    colorType = await this.colorTypeService.findOne(createCatDto.color_type_id)
+    const cat = this.catRepository.create({
+      ...createCatDto, 
+      color_type: colorType, 
+      status: status, 
+      adopter: adopter
+    })
+    return await this.catRepository.save(cat)
   }
 
-  findAll() {
-    return `This action returns all cats`;
+  async findAll() {
+    return await this.catRepository.find({
+      relations: ['adopter', 'color_type', 'status']
+    })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cat`;
+  async findOne(id: number) {
+    const cat = await this.catRepository.findOne({
+      where: {id}, 
+      relations: ['adopter', 'color_type', 'status']
+    })
+    if (!cat) throw new NotFoundException()
+    return cat
   }
 
-  update(id: number, updateCatDto: UpdateCatDto) {
-    return `This action updates a #${id} cat`;
+  async update(id: number, updateCatDto: UpdateCatDto) {
+    const cat = await this.findOne(id)
+    let colorType: ColorType | undefined
+    let status: Status | undefined
+    let adopter: Adopter | undefined
+    this.catRepository.merge(cat, updateCatDto)
+    if (updateCatDto.color_type_id){
+      colorType = await this.colorTypeService.findOne(updateCatDto.color_type_id)
+      cat.color_type = colorType
+    }
+    if (updateCatDto.status_id){
+      status = await this.statusService.findOne(updateCatDto.status_id)
+      cat.status = status
+    }
+    if (updateCatDto.adopter_id){
+      adopter = await this.adopterService.findOne(updateCatDto.adopter_id)
+      cat.adopter = adopter
+    }
+    return await this.catRepository.save(cat)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cat`;
+  async remove(id: number) {
+   const cat = await this.findOne(id)
+   return await this.catRepository.remove(cat)
   }
 }

@@ -16,6 +16,7 @@ import { AdoptersModule } from './adopters/adopters.module';
 import { AnswersModule } from './answers/answers.module';
 import { QuestionsModule } from './questions/questions.module';
 import { RulesModule } from './rules/rules.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true
@@ -35,7 +36,7 @@ import { RulesModule } from './rules/rules.module';
         autoLoadEntities: true,
       }
     }
-  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule
+  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

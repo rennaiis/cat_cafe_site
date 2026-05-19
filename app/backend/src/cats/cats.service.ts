@@ -10,15 +10,12 @@ import { ColorType } from '../color_types/entities/color_type.entity';
 import { StatusesService } from '../statuses/statuses.service';
 import { ColorTypesService } from '../color_types/color_types.service';
 import { AdoptersService } from '../adopters/adopters.service';
-import { stat } from 'fs';
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(Cat)
     private readonly catRepository: Repository<Cat>,
-
-    @InjectRepository(Adopter)
     private readonly adopterService: AdoptersService, 
     private readonly statusService: StatusesService,
     private readonly colorTypeService: ColorTypesService,
@@ -44,14 +41,14 @@ export class CatsService {
 
   async findAll() {
     return await this.catRepository.find({
-      relations: ['adopter', 'color_type', 'status']
+      relations: ['adopter', 'color_type', 'status', 'adopt_applications']
     })
   }
 
   async findOne(id: number) {
     const cat = await this.catRepository.findOne({
       where: {id}, 
-      relations: ['adopter', 'color_type', 'status']
+      relations: ['adopter', 'color_type', 'status', 'adopt_applications']
     })
     if (!cat) throw new NotFoundException()
     return cat
@@ -62,7 +59,6 @@ export class CatsService {
     let colorType: ColorType | undefined
     let status: Status | undefined
     let adopter: Adopter | undefined
-    this.catRepository.merge(cat, updateCatDto)
     if (updateCatDto.color_type_id){
       colorType = await this.colorTypeService.findOne(updateCatDto.color_type_id)
       cat.color_type = colorType
@@ -75,6 +71,7 @@ export class CatsService {
       adopter = await this.adopterService.findOne(updateCatDto.adopter_id)
       cat.adopter = adopter
     }
+    this.catRepository.merge(cat, updateCatDto)
     return await this.catRepository.save(cat)
   }
 

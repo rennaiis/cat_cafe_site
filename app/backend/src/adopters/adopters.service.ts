@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAdopterDto } from './dto/create-adopter.dto';
 import { UpdateAdopterDto } from './dto/update-adopter.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Adopter } from './entities/adopter.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AdoptersService {
-  create(createAdopterDto: CreateAdopterDto) {
-    return 'This action adds a new adopter';
+  constructor(
+    @InjectRepository(Adopter)
+    private readonly adopterRepository: Repository<Adopter>
+  ){}
+  async create(createAdopterDto: CreateAdopterDto) {
+    const newAdopter = this.adopterRepository.create(createAdopterDto)
+    return await this.adopterRepository.save(newAdopter)
   }
 
-  findAll() {
-    return `This action returns all adopters`;
+  async findAll() {
+    return await this.adopterRepository.find(
+      {
+        relations: ['cats', 'adopt_applications']
+      }
+    )
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} adopter`;
+  async findOne(id: number) {
+    const adopter = await this.adopterRepository.findOne({
+      where: {id},
+      relations: ['cats', 'adopt_applications']
+    })
+    if (!adopter){
+      throw new NotFoundException('no adopter with this id')
+    }
+    return adopter
   }
 
-  update(id: number, updateAdopterDto: UpdateAdopterDto) {
-    return `This action updates a #${id} adopter`;
+  async update(id: number, updateAdopterDto: UpdateAdopterDto) {
+    const adopter = await this.findOne(id)
+    const updatedAdopter = this.adopterRepository.merge(adopter, updateAdopterDto)
+    return await this.adopterRepository.save(updatedAdopter)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} adopter`;
+  async remove(id: number) {
+    const adopter = await this.findOne(id)
+    await this.adopterRepository.remove(adopter)
   }
 }

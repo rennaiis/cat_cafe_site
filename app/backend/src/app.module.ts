@@ -10,7 +10,6 @@ import { UsersModule } from './users/users.module';
 import { EmployeesModule } from './employees/employees.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { ColorTypesModule } from './color_types/color_types.module';
-import { PhotosApplicationsModule } from './photos_applications/photos_applications.module';
 import { AdoptApplicationsModule } from './adopt_applications/adopt_applications.module';
 import { AdoptersModule } from './adopters/adopters.module';
 import { AnswersModule } from './answers/answers.module';
@@ -36,7 +35,7 @@ import { AuthModule } from './auth/auth.module';
         autoLoadEntities: true,
       }
     }
-  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, PhotosApplicationsModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, AuthModule
+  }), LandingDataModule, FilesModule, CatsModule, UsersModule, EmployeesModule, StatusesModule, ColorTypesModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

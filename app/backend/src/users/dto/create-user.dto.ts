@@ -7,7 +7,7 @@ export class CreateUserDto {
     @IsOptional()
     @Transform(({value})=> parseInt(value))
     @IsInt()
-    employeeId?: number
+    employee_id?: number
 
     @IsString()
     @IsNotEmpty()

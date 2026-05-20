@@ -8,7 +8,7 @@ export class User {
     id: number
 
     @OneToOne(()=>Employee, (employee)=>employee.user, {nullable: true})
-    @JoinColumn({name: 'employee'})
+    @JoinColumn({name: 'employee_id'})
     employee?: Employee
     
     @Column({type: 'varchar', unique: true, length: 100})
@@ -21,6 +21,6 @@ export class User {
         type: 'enum', 
         enum: UserRole
     })
-    userRole: UserRole
+    role: UserRole
 
 }

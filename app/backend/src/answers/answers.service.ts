@@ -1,26 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Answer } from './entities/answer.entity';
+import { Repository } from 'typeorm';
+import { QuestionsService } from '../questions/questions.service';
+import { AdoptApplicationsService } from '../adopt_applications/adopt_applications.service';
 
 @Injectable()
 export class AnswersService {
-  create(createAnswerDto: CreateAnswerDto) {
-    return 'This action adds a new answer';
+
+  constructor(
+    @InjectRepository(Answer)
+    private readonly answerRepository: Repository<Answer>,
+    private readonly questionsService: QuestionsService,
+    private readonly adoptApplicationsService: AdoptApplicationsService,
+  ) {}
+
+  async create(createAnswerDto: CreateAnswerDto) {
+    const question = await this.questionsService.findOne(createAnswerDto.question_id);
+    const application = await this.adoptApplicationsService.findOne(createAnswerDto.application_id);
+
+    const answer = await this.answerRepository.create({
+      ...createAnswerDto,
+      question: question, 
+      application: application
+
+    });
+
+    return await this.answerRepository.save(answer);
   }
 
-  findAll() {
-    return `This action returns all answers`;
+  async findAll() {
+    return await this.answerRepository.find({
+      relations: ['question', 'adoptApplication'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} answer`;
+  async findOne(id: number) {
+    const answer = await this.answerRepository.findOne({
+      where: { id },
+      relations: ['question', 'adoptApplication'],
+    });
+    
+    if (!answer) {
+      throw new NotFoundException(`Answer with ID ${id} not found`);
+    }
+    return answer;
   }
 
-  update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return `This action updates a #${id} answer`;
+  async update(id: number, updateAnswerDto: UpdateAnswerDto) {
+    const answer = await this.findOne(id);
+
+    if (updateAnswerDto.question_id) {
+      const question = await this.questionsService.findOne(updateAnswerDto.question_id);
+      answer.question = question;
+    }
+
+    if (updateAnswerDto.application_id) {
+      const adoptApplication = await this.adoptApplicationsService.findOne(updateAnswerDto.application_id);
+      answer.application = adoptApplication;
+    }
+
+    this.answerRepository.merge(answer, updateAnswerDto);
+    return await this.answerRepository.save(answer);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} answer`;
+  async remove(id: number) {
+    const answer = await this.findOne(id);
+    return await this.answerRepository.remove(answer);
   }
 }
+
+

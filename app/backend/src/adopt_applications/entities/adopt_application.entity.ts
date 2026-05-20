@@ -13,7 +13,7 @@ export class AdoptApplication {
     @JoinColumn({name: 'adopter_id'})
     adopter: Adopter
 
-    @OneToMany(()=>Answer, (answer)=>answer.adopt_application)
+    @OneToMany(()=>Answer, (answer)=>answer.application)
     answers?: Answer[]
 
     @ManyToOne(()=>Cat, (cat)=>cat.adopt_applications, {nullable: false})

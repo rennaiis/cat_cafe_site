@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { AdoptApplicationsService } from './adopt_applications.service';
 import { CreateAdoptApplicationDto } from './dto/create-adopt_application.dto';
 import { UpdateAdoptApplicationDto } from './dto/update-adopt_application.dto';

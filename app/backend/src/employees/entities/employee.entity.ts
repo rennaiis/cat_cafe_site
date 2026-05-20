@@ -27,6 +27,6 @@ export class Employee {
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   salary: number;
 
-  @OneToOne(() => User, (user) => user.employee)
+  @OneToOne(() => User, (user) => user.employee, {nullable: true})
   user: User;
 }

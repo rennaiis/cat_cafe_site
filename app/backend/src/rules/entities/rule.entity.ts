@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('rules')
 export class Rule {

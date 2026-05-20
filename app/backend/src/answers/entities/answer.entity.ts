@@ -1,5 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Column } from "typeorm/browser";
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column} from "typeorm";
 import { Question } from "../../questions/entities/question.entity";
 import { AdoptApplication } from "../../adopt_applications/entities/adopt_application.entity";
 

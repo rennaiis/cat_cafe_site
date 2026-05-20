@@ -32,9 +32,9 @@ export class FileEntity {
 
     @ManyToOne(()=>Cat, {nullable: true, onDelete: 'SET NULL'})
     @JoinColumn({name: 'cat_id'})
-    cat: null | Cat;
+    cat?: null | Cat;
 
     @ManyToOne(()=>ColorType, {nullable: true, onDelete: 'SET NULL'})
     @JoinColumn({name: 'color_type_id'})
-    colorType: null | ColorType;
+    colorType?: null | ColorType;
 }

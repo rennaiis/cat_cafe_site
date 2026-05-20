@@ -15,7 +15,7 @@ export class AnswersService {
     private readonly answerRepository: Repository<Answer>,
     private readonly questionsService: QuestionsService,
     private readonly adoptApplicationsService: AdoptApplicationsService,
-  ) {}
+  ){}
 
   async create(createAnswerDto: CreateAnswerDto) {
     const question = await this.questionsService.findOne(createAnswerDto.question_id);

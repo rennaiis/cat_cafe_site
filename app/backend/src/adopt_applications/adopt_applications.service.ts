@@ -7,12 +7,13 @@ import { CatsService } from '../cats/cats.service';
 import { AdoptersService } from '../adopters/adopters.service';
 import { Cat } from '../cats/entities/cat.entity';
 import { Adopter } from '../adopters/entities/adopter.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AdoptApplicationsService {
   constructor(
     @InjectRepository(AdoptApplication)
-    private readonly adoptApplicationsRepository,
+    private readonly adoptApplicationsRepository: Repository<AdoptApplication>,
     private readonly catService: CatsService,
     private readonly adopterService: AdoptersService
 
@@ -20,7 +21,7 @@ export class AdoptApplicationsService {
   async create(createAdoptApplicationDto: CreateAdoptApplicationDto) {
     const cat = await this.catService.findOne(createAdoptApplicationDto.cat_id)
     const adopter = await this.adopterService.findOne(createAdoptApplicationDto.adopter_id)
-    const application = this.adoptApplicationsRepository.create({
+    const application = await this.adoptApplicationsRepository.create({
       ...createAdoptApplicationDto, 
       adopter: adopter, 
       cat: cat
@@ -30,14 +31,14 @@ export class AdoptApplicationsService {
 
   async findAll() {
     return await this.adoptApplicationsRepository.find({
-      relations: ['cat', 'adopter']
+      relations: ['cat','adopter','answers']
     })
   }
 
   async findOne(id: number) {
     const application = await this.adoptApplicationsRepository.findOne({
       where: {id}, 
-      relations: ['cat', 'adopter']
+      relations: ['cat','adopter','answers']
     })
     if (!application) throw new NotFoundException()
     return application
@@ -57,7 +58,6 @@ export class AdoptApplicationsService {
     }
     this.adoptApplicationsRepository.merge(application, updateAdoptApplicationDto)
     return await this.adoptApplicationsRepository.save(application)
-
   }
 
   async remove(id: number) {

@@ -7,16 +7,16 @@ import { Repository } from 'typeorm';
 import { Cat } from '../cats/entities/cat.entity';
 import { ColorType } from '../color_types/entities/color_type.entity';
 import * as fs from 'fs';
+import { CatsService } from '../cats/cats.service';
+import { ColorTypesService } from '../color_types/color_types.service';
 
 @Injectable()
 export class FilesService {
   constructor(
     @InjectRepository(FileEntity)
     private readonly fileRepository: Repository<FileEntity>,
-    @InjectRepository(Cat)
-    private readonly catRepository: Repository<Cat>,
-    @InjectRepository(ColorType)
-    private readonly colorTypeRepository: Repository<ColorType>
+    private readonly catService: CatsService,
+    private readonly colorTypeService: ColorTypesService
   ){}
   async create(createFileDto: CreateFileDto) {
     const file = this.fileRepository.create(createFileDto)
@@ -30,24 +30,14 @@ export class FilesService {
     if (!files || files.length === 0){
       throw new BadRequestException;
     }
-    let attachedCat: Cat | null = null
-    let attachedColorType: ColorType | null = null
+    let attachedCat: Cat | undefined
+    let attachedColorType: ColorType | undefined
     try{
       if (createFileDto.cat_id){
-        attachedCat = await this.catRepository.findOne({
-          where: {id: Number(createFileDto.cat_id)}
-        })
-        if (!attachedCat){
-          throw new NotFoundException('no cat with this id in db')
-        }
+        attachedCat = await this.catService.findOne(createFileDto.cat_id)
       }
       if (createFileDto.color_type_id){
-        attachedColorType = await this.colorTypeRepository.findOne({
-          where: {id: Number(createFileDto.color_type_id)}
-        })
-        if (!attachedColorType){
-          throw new NotFoundException('no color type with this id in db')
-        }
+        attachedColorType = await this.colorTypeService.findOne(createFileDto.color_type_id)
       }
     }catch(error){
       this.deletePhysicalFiles(files)

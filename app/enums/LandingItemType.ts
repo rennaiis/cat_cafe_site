@@ -17,5 +17,5 @@ export enum LandingItemType{
     STUDENTS_CONDITIONS = 'students_conditions', 
     GROUP_PEOPLE_AMOUNT = 'group_people_amount', 
     GROUP_DISCOUNT = 'group_discount',
-    GROUP_PEOPLE_CONDITIONS = 'group_people_conditions'
+    GROUP_CONDITIONS = 'group_people_conditions',
 }

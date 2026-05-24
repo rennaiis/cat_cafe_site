@@ -18,23 +18,23 @@ export class Cat {
     gender: CatGender
 
     @Column({type: 'text', nullable: true})
-    description: string
+    description?: string
 
     @Column({type: 'varchar', nullable: true, length: 100})
-    breed: string
+    breed?: string
 
     @Column({type: 'date', nullable: true})
-    birth_date: Date
+    birth_date?: Date
 
     @Column({type: 'date', nullable: true})
-    accept_date: Date
+    accept_date?: Date
 
     @Column({type: 'date', nullable: true})
-    adopt_date: Date
+    adopt_date?: Date
 
     @ManyToOne(()=> ColorType, (colorType)=>colorType.id, {nullable: false})
     @JoinColumn({name: 'color_type_id'})
-    color_type: ColorType
+    color_type?: ColorType
     
     @ManyToOne(()=>Status, (status)=>status.id, {nullable: false})
     @JoinColumn({name: 'status_id'})

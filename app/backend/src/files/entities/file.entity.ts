@@ -15,6 +15,9 @@ export class FileEntity {
     @Column({ type: 'text' })
     name: string;
 
+    @Column({type: 'text', nullable: true})
+    preview?: string;
+
     @Column({type: 'boolean', nullable: true})
     is_approved?: boolean
 

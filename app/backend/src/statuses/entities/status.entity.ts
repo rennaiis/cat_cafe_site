@@ -11,8 +11,8 @@ export class Status {
   @Column({ type: 'varchar', length: 100 })
   status: string;
 
-  @Column({ type: 'varchar', length: 8 })
-  color: string;
+  @Column({ type: 'varchar', length: 8, nullable: true })
+  color?: string;
 
   @Column({
     type: 'enum',

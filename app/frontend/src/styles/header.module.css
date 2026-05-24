@@ -1,0 +1,43 @@
+.header{
+    font-family: var(--header-font);
+    font-size: clamp(36px,  8vw, 60px);
+    color: var(--light-stroke-color);
+    -webkit-text-stroke: 1px var(--orange-color);        
+}
+.navButtons{
+    background-color: var(--elements-background-color);
+}
+
+.headerBack{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-image: url('../assets/header-back.png');
+    background-repeat: repeat;
+    padding-bottom: 20px;
+}
+.headerLine{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    gap: 2em;
+}
+.menuLine{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+    position: relative;
+    gap: 20px;
+}
+
+.logo{
+    width: clamp(95px, 12vw, 204px);
+    height: auto;
+    flex-shrink: 0;
+    margin: 10px;
+}

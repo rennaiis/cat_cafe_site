@@ -1,0 +1,21 @@
+.logo{
+    width: clamp(45px, 8vw, 100px);
+    height: auto;
+    flex-shrink: 0;
+}
+
+.adminHeader{
+    display: flex; 
+    flex-direction: row;
+    padding: 20px;
+    gap: 30px;
+    background-color: var(--elements-background-color);
+    align-items: center
+}
+
+.navButton{
+    background-color: var(--elements-background-color);
+    font-weight: 600;
+    max-height: 2rem;
+
+}

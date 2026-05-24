@@ -1,0 +1,88 @@
+.about{
+    padding-left: 20px;
+}
+
+.galleryContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    overflow:hidden;
+}
+.rowWrapper{
+    display: flex;
+    width: 100%;
+    overflow-x: auto; 
+    overflow-y:hidden;
+    white-space:nowrap;
+    scrollbar-width: none;
+}
+ 
+.boardContainer:hover{
+    transform: rotate(-4deg);
+    transform-origin: center;
+    display: inline-block;
+}
+
+
+.board{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    width: 50%;
+    justify-self: center;
+}
+
+.boardImg{
+    grid-area: 1 / 1;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.boardText{
+    grid-area: 1 / 1;
+    color: var(--light-stroke-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--chalk-font);
+    pointer-events: none;
+    padding: 10%;
+}
+.title{
+    font-size: 20px;
+    white-space: nowrap;
+}
+.count{
+    font-size: 32px;
+}
+
+.rowPhotos{
+    display: flex;
+    gap: 20px;
+    width: max-content
+}
+.rowPhotosLeft{
+    transform: translateX(10%);
+}
+.rule{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.priceCard{
+    min-width: 30%;
+    max-width: 30%;
+    padding: 1%
+}
+
+.mapCard{
+    width: 40%;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 8px solid white;
+}

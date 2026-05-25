@@ -2,11 +2,21 @@ import { CatGender } from "../../../enums/CatGender";
 import { StatusType } from "../../../enums/StatusType";
 import type { ColorType, MyFile, Status } from "../types";
 import { filesListTest } from "./testFiles";
-const getYearsAgo = (years: number): Date => {
+export const getYearsAgo = (years: number): Date => {
     const date = new Date();
     date.setFullYear(Number(date.getFullYear) - years)
     return date
 }
+export const calculateAge = (birthDateString: string | Date): number => {
+  const birthDate = new Date(birthDateString);
+  const today = new Date();
+  const yearsDifference = today.getFullYear() - birthDate.getFullYear();
+  const monthsDifference = today.getMonth() - birthDate.getMonth();
+  const totalMonths = yearsDifference * 12 + monthsDifference;
+  const ageInYears = totalMonths / 12;
+  return Math.round(ageInYears * 2) / 2;
+}
+
 const filesList: MyFile[] = filesListTest
 export const statusListTest: Status[] = [
     {

@@ -1,5 +1,5 @@
 export enum StatusType {
-    ADOPTED = 'adopted', 
-    IN_CAFE = 'in_cafe', 
-    HIDDEN = 'hidden'
+    ADOPTED = 'Нашёл дом', 
+    IN_CAFE = 'В котокафе', 
+    HIDDEN = 'скрыт'
 }

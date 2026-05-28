@@ -1,5 +1,5 @@
 export enum ApplicationStatus {
-    NEW = 'new', 
-    APPROVED = 'approved', 
-    REJECTED = 'rejected'
+    NEW = 'Новое', 
+    APPROVED = 'Одобрено', 
+    REJECTED = 'Отказано'
 }

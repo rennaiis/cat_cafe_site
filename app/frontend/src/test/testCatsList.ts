@@ -4,9 +4,10 @@ import type { ColorType, MyFile, Status } from "../types";
 import { filesListTest } from "./testFiles";
 export const getYearsAgo = (years: number): Date => {
     const date = new Date();
-    date.setFullYear(Number(date.getFullYear) - years)
+    date.setFullYear(Number(date.getFullYear()) - years)
     return date
 }
+
 export const calculateAge = (birthDateString: string | Date): number => {
   const birthDate = new Date(birthDateString);
   const today = new Date();
@@ -53,7 +54,8 @@ export const catsListTest = [
         birth_date: getYearsAgo(6), 
         status: statusListTest[0], 
         files: [filesListTest[14]], 
-        color_type: colorTypesTest[0]
+        color_type: colorTypesTest[0], 
+        accept_date: getYearsAgo(2)
     }, 
     {
         id: 2, 
@@ -102,7 +104,7 @@ export const catsListTest = [
         description: `Великолепная кошечка 💗 умница - ориентируется в пространстве очень хорошо,
          лоток- идеально в любой наполнитель, дружелюбчинка, ласкуша. Лучше в семью к дружелюбным сородичам.`, 
         birth_date: getYearsAgo(6), 
-        status: statusListTest[0], 
+        status: statusListTest[2], 
         files: [filesListTest[18]], 
         color_type: colorTypesTest[0]
     }, 

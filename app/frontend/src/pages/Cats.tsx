@@ -17,10 +17,9 @@ function Cats(){
     const [selectedCat, setSelectedCat] = useState<Cat | null>(null)
     if (selectedCat) {
         return (
-            <div style={{ padding: '20px' }}>
+            <div>
                 <button 
                     onClick={() => setSelectedCat(null)} 
-                    style={{ cursor: 'pointer', padding: '8px 16px', marginBottom: '20px' }}
                 >
                     ← Назад к списку
                 </button>
@@ -39,7 +38,7 @@ function Cats(){
                     className={s.cardCat + ' scale'} 
                     key={`${idx}-${cat.id}`}
                     onClick={() => setSelectedCat(cat)}
-                    style={{ cursor: 'pointer' }}
+
                 >
                     <img className={s.catImg}  src={`${cat.files[0].path}/${cat.files[0].name}`} alt="row2" />
                     <h3>{cat.name}, {cat.gender}, {cat.birth_date ? calculateAge(cat.birth_date) : ''}</h3>

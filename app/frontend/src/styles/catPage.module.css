@@ -1,0 +1,125 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mainBlock {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.photoColumn {
+    flex: 1;
+    min-width: 300px;
+}
+
+.mainImg {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+}
+
+.thumbsRow {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto;
+}
+
+.thumbImg {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.noPhoto {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--light-text-color);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infoColumn {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin: 0 0 15px 0;
+}
+
+.badgeWrapper {
+    margin-bottom: 25px;
+}
+
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--elements-background-color);
+    color: var(--header-font);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.featuresList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+.featureRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--light-borders);
+}
+
+.featureLabel {
+    color: var(--light-text-color);
+}
+
+.featureValue {
+    font-weight: 600;
+}
+
+.descriptionSection {
+    margin-bottom: 40px;
+}
+
+.descriptionTitle {
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--light-borders);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.descriptionText {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.historyTitle {
+    font-size: 1.3rem;
+}
+
+.historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.05rem;
+}

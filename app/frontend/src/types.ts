@@ -4,6 +4,7 @@ import type { FileType } from "../../enums/FileType";
 import type { LandingItemType } from "../../enums/LandingItemType";
 import type { CatGender } from "../../enums/CatGender";
 import type { StatusType } from "../../enums/StatusType";
+import type { ApplicationStatus } from "../../enums/ApplicationStatus";
 
 export interface MyFile {
     id: number,
@@ -13,7 +14,7 @@ export interface MyFile {
     type: FileType,
     category: FileCategory,
     cat?: Cat,
-    // colorType?: ColorType;
+    colorType?: ColorType;
 }
 
 export interface LandingData {
@@ -52,18 +53,17 @@ export interface Cat {
     adopt_date?: Date
     color_type: ColorType
     status: Status
-    //adopter?: Adopter
+    adopter?: Adopter
     files: MyFile[]
-    //adopt_applications: AdoptApplication[]
+    adopt_applications?: AdoptApplication[]
 }
 
 export interface ColorType {
   id: number;
   color_type: string;
-  color: string;
+  color?: string;
   cats?: Cat[];
   file: MyFile;
-  file_id: number;
 }
 
 export interface Status {
@@ -71,4 +71,43 @@ export interface Status {
   status: string;
   color?: string;
   type: StatusType; 
+}
+
+export interface Question {
+  id: number;
+  question_text: string;
+  is_mandatory: boolean;
+  is_open: boolean;
+  one_answer?: boolean;
+  variants?: string[];
+  answers?: Answer[];
+}
+
+export interface Answer {
+  id: number;
+  answer: string;
+  question_id: number;
+  application_id: number;
+  question: Question;
+  application: AdoptApplication;
+}
+
+export interface AdoptApplication {
+    id: number
+    adopter: Adopter
+    answers?: Answer[]
+    cat: Cat
+    application_status: ApplicationStatus
+}
+
+export interface Adopter {
+    id: number
+    first_name: string
+    last_name: string
+    middle_name?: string
+    mobile?: string
+    email: string
+    contact?: string
+    cats?: Cat[]
+    adopt_applications?: AdoptApplication[]
 }

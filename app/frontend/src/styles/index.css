@@ -10,9 +10,10 @@
     --light-stroke-color: #FFFFFF;
     --elements-background-color: #ffe7d3;
     --orange-color: #E48641;
-    --grey: #ecc2c2;
+    --light-borders: f0f0f0;
+    --light-text-color: #af886e;
     --header-font: 'Caveat';
-    --main-text-font: 'Nunito Sans';
+    --main-text-font: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --chalk-font: 'Pangolin';
     --usual-font: 'Inter',
     --paw-height: 7em; 
@@ -26,6 +27,9 @@ input{
     cursor: pointer;
     border-radius: 5px;
     padding: 3px;
+    font-family: var(--main-text-font);
+    font-size: 16px;
+    color: var(--dark-text-color);
 }
 
 textarea{
@@ -38,11 +42,48 @@ textarea{
     border-radius: 5px;
     padding: 3px;
     height: max-content;
+    font-family: var(--main-text-font);
+    font-size: 16px;
+    color: var(--dark-text-color);
+}
+.little-text{
+    font-size: 12px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s ease;
+}
+input[type="checkbox"]::before, 
+input[type="radio"]::before{
+    content:  "✓";
+    font-family: var(--header-font);
+    font-size: 14px;
+    color: var(--dark-text-color);
+    font-weight: 900;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.15s ease;
+}
+input[type="checkbox"]:checked::before, 
+input[type="radio"]:checked:before{
+    opacity: 1;
+    transform: scale(1);
 }
 body{
     background-color: var(--page-background-color);
     font-family: var(--main-text-font);
     font-size: 11px;
+    font-weight: 400;
     color: var(--dark-text-color);
     margin: 0px;  
     padding: 0px;
@@ -73,6 +114,12 @@ a {
 .scale:hover{
     transform: scale(1.1);
 }
+.bold-hover{
+     transition: 0.3s all ease;
+}
+.bold-hover:hover{
+    font-weight: 500;
+}
 main{
     padding: 5px;
 }
@@ -92,6 +139,7 @@ button{
     border:none;
     cursor: pointer;
     font-size: 11px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 button:hover{
     background-color: var(--dark-text-color);
@@ -100,7 +148,9 @@ button:hover{
 }
 .card{
     background-color: var(--elements-background-color);
-    border-radius: 20px;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
 .row{
     display: flex;
@@ -131,8 +181,7 @@ nav a{
 }
 
 .footer-text{
-    color: var(--grey);
-    font-family: Arial, Helvetica, sans-serif;
+    color: var(--light-text-color);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -163,12 +212,7 @@ nav a{
     height: 2em;
     flex-shrink: 0;
 }
-.bold-hover{
-     transition: 0.3s all ease;
-}
-.bold-hover:hover{
-    font-weight: 800;
-}
+
 
 
 @media (min-width: 424px) {

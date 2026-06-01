@@ -1,4 +1,6 @@
+import { LandingItemType } from "../../enums/LandingItemType";
 import { UserRole } from "../../enums/UserRole";
+import { LandingDataService } from "./landing-data/landing-data.service";
 import { UsersService } from "./users/users.service";
 
 export async function makeInitialUsers(usersService: UsersService) {
@@ -22,5 +24,19 @@ export async function makeInitialUsers(usersService: UsersService) {
     }else{
         return
     }
-    
+}
+
+export async function makeInitialLandingData(landingDataService: LandingDataService) {
+    const allTypes: string[] = Object.keys(LandingItemType)
+    for (const type of allTypes){
+        const typeValue = LandingItemType[type as keyof typeof LandingItemType]
+        const exists = await landingDataService.findOneNoExeption(typeValue)
+        if (exists === null){
+            await landingDataService.create({
+                type: LandingItemType[type], 
+                text: ' -- '
+            })
+        }
+
+    }
 }

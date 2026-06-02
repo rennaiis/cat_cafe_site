@@ -1,34 +1,43 @@
 import type { LandingData, MyFile, Rule } from '../types'
-import { FileType } from '../../../enums/FileType'
 import s from '../styles/landing.module.css'
 import pawIcon1 from '../assets/paw-icon-1.png'
 import pawIcon2 from '../assets/paw-icon-2.png'
 import board from '../assets/board2.png'
 import { FileCategory } from '../../../enums/FileCategory'
-import { LandingItemType } from '../../../enums/LandingItemType'
-import { landingDataTest, rulesTest } from '../test/testLandingData'
+import { rulesTest } from '../test/testLandingData'
 import { filesListTest } from '../test/testFiles'
+import { useEffect, useState } from 'react'
+import { getLandingData } from '../API/LandingAPI'
 
 // const picUrl = "http://localhost:3000/passportFiles/"
 const picUrl = './photos'
 const photos_list: MyFile[] = filesListTest.filter(f => f.category === FileCategory.LANDING_PHOTO)
 const rules: Rule[] = rulesTest
-const landingData: LandingData = landingDataTest
+
 
 const row1 = photos_list.filter((_, id)=>id%2 !== 0)
 const row2 = photos_list.filter((_, id)=>id%2 === 0)
 const dubleRow1 = [...row1, ...row1, ...row1]
 const dubleRow2 = [...row2, ...row2, ...row2]
 
-function Landing(){    
+function Landing(){   
+    const [landingData, setLandingData] =  useState<LandingData>()
+    useEffect(()=>{
+        getLandingData().then((data)=>{
+            setLandingData(data)
+        }).catch((err)=>console.error('loading landing mistake: ', err))
+    }, []) 
+    if (!landingData){
+        return <div>Загрузка...</div>
+    }
     return (
         <>
         <div className={s.galleryContainer}>
             <div className={s.rowWrapper} >
                 <div className={s.rowPhotos}>
                     {dubleRow1.map((photo, idx)=>(
-                        <div className='photo-card scale' key = {`${idx}-${photo.id}`}>
-                            <img     src={`${photo.path}/${photo.name}`} alt="row1" />
+                        <div className='photo-card' key = {`${idx}-${photo.id}`}>
+                            <img   className='photo'  src={`${photo.path}/${photo.name}`} alt="row1" />
                         </div>
                     ))}
                 </div>
@@ -36,8 +45,8 @@ function Landing(){
             <div className={s.rowWrapper} >
                 <div className={s.rowPhotos}>
                     {dubleRow2.map((photo, idx)=>(
-                        <div className='photo-card scale' key = {`${idx}-${photo.id}`}>
-                            <img  src={`${photo.path}/${photo.name}`} alt="row2" />
+                        <div className='photo-card' key = {`${idx}-${photo.id}`}>
+                            <img className='photo' src={`${photo.path}/${photo.name}`} alt="row2" />
                         </div>
                     ))}
                 </div>

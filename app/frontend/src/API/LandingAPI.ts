@@ -5,9 +5,9 @@ export async function getLandingData() {
    const res =  await fetch(URL, {
       credentials: 'include',
    });
-   console.log(res.url);
    if (!res.ok) throw new Error(`can't get landing`)
    return res.json()
+
 }
 
 export async function saveLandingData(landingData: LandingData) {

@@ -30,13 +30,28 @@ export async function makeInitialLandingData(landingDataService: LandingDataServ
     const allTypes: string[] = Object.keys(LandingItemType)
     for (const type of allTypes){
         const typeValue = LandingItemType[type as keyof typeof LandingItemType]
+        
         const exists = await landingDataService.findOneNoExeption(typeValue)
         if (exists === null){
-            await landingDataService.create({
-                type: LandingItemType[type], 
-                text: ' -- '
-            })
+            if (type == 'CATS_AT_HOME' || 
+                type == 'CATS_IN_CAFE' ||
+                type == 'CLOSE_TIME' || 
+                type == 'OPEN_TIME' ||
+                type == 'FIRST_HOUR_PRICE_STANDART' ||
+                type == 'FOLLOWING_HOURS_PRICE_STANDART' ||
+                type == 'GROUP_DISCOUNT' || 
+                type == 'GROUP_PEOPLE_AMOUNT' ||
+                type == 'STUDENTS_PRICE'){
+                    await landingDataService.create({
+                        type: LandingItemType[type],
+                        text: '0'
+                    })
+                }else{
+                    await landingDataService.create({
+                    type: LandingItemType[type], 
+                    text: ' -- '
+                })
+            }
         }
-
     }
 }

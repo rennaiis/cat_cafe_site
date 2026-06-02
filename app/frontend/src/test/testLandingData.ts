@@ -93,5 +93,8 @@ export const landingDataTest: LandingData = {
     [LandingItemType.CONTACT_PHONE]: '+79201235426', 
     [LandingItemType.CONTACT_EMAIL]: 'cats@gmail.com', 
     [LandingItemType.VK_LINK]: 'https://vk.com/catcafe_yar?w=club115152734',
-    [LandingItemType.ADRESS]: 'г. Ярославль, ул. Республиканская, 32'
+    [LandingItemType.ADRESS]: 'г. Ярославль, ул. Республиканская, 32',
+    [LandingItemType.OPEN_TIME]: 9, 
+    [LandingItemType.CLOSE_TIME]:21, 
+    [LandingItemType.LOGO_LINK]: '-'
 }

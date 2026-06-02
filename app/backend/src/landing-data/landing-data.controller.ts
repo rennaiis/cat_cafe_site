@@ -12,11 +12,8 @@ export class LandingDataController {
     return this.landingDataService.findAll();
   }
 
-  @Patch(':type')
-    update(
-      @Param('type') type: LandingItemType, 
-      @Body() updateLandingDataDto: UpdateLandingDataDto
-    ) {
-      return this.landingDataService.update(type, updateLandingDataDto);
-    }
+  @Post()
+  async updateAll(@Body() object: Record<string, any>){
+    return this.landingDataService.updateAll(object)
+  }    
 }

@@ -55,4 +55,16 @@ export class LandingDataService {
     )
     return this.findOne(type)
   }
+
+  async updateAll(object: Record<LandingItemType, string>) {
+      for (const key in object) {
+        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        const type = key as LandingItemType; 
+        const text = object[type];
+        await this.update(type, { text: text });
+      }
+    }
+  return this.findAll();
+ }
+
 }

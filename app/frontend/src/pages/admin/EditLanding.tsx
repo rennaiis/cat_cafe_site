@@ -2,15 +2,13 @@ import React, { useEffect, useState, type ChangeEvent } from "react"
 import { LandingItemType } from "../../../../enums/LandingItemType"
 import type { LandingData, Rule } from "../../types"
 import { rulesTest } from "../../test/testLandingData"
-import s from '../../styles/adminLanding.module.css'
+import s from '../../styles/admin.module.css'
 import { getLandingData, saveLandingData } from "../../API/LandingAPI"
 import { createRule, getRules, removeRule, updateRule } from "../../API/RulesAPI"
-const rulesList: Rule[] = rulesTest
 const optionsList: string[] = ['При входе', 'В котокафе','Посещение с детьми','Аллергия']
 
 function EditLanding() {
     const [landingData, setLandingData] =  useState<LandingData>()
-    const [editedRuleId, setEditedRuleId] = useState<number|null>(null)
     const [rules, setRules] = useState<Rule[]>([])
     const [editedRule, setEditedRule] = useState<Rule | null>(null)
     const [ruleForm, setRuleForm] = useState<Omit<Rule, 'id'>>({
@@ -272,64 +270,83 @@ function EditLanding() {
                 </form>
 
                 <h3>Список текущих правил</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Категория</th>
-                            <th>Текст правила</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rules.map((rule) => (
-                            <tr key={rule.id}>
-                                {editedRule && editedRule.id === rule.id ? 
+                <div className={s.list}>
+                    {rules.map((rule) => (
+                        <div key={rule.id} className={s.itemCard}>
+                            {editedRule && editedRule.id === rule.id ? (
                                 <>
-                                    <td>
-                                    <select 
-                                        name="category"
-                                        value={editedRule.category}
-                                        onChange={handleEditChange}
+                                    <div className={s.field}>
+                                        <label>Категория</label>
+                                        <select
+                                            name="category"
+                                            value={editedRule.category}
+                                            onChange={handleEditChange}
                                         >
-                                        {optionsList.map((option)=>(
-                                            <option value={option}>{option}</option>                            
-                                        ))}
-                                    </select>
-                                    </td>
-                                    <td>
+                                            {optionsList.map((option) => (
+                                                <option key={option} value={option}>
+                                                    {option}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className={s.field}>
+                                        <label>Текст правила</label>
                                         <textarea
-                                        name="text"
-                                        value={editedRule.text} 
-                                        rows={2}
-                                        onChange={handleEditChange} />
-                                    </td>
-                                    <td className={s.row}>
-                                        <button onClick={()=>{setEditedRule(null) 
-                                        }
-                                        }>Отмена</button>
-                                        <button onClick={editRule}>Сохранить</button>
-                                    </td>
-                                </> : 
-                                <>
-                                    <td>{rule.category}</td>
-                                    <td>{rule.text}</td>
-                                    <td className={s.row}>
-                                        <button onClick={()=>setEditedRule({...rule})}>Редактировать</button>
-                                        <button 
-                                            type="button" 
-                                            onClick={async ()=>{
-                                                await removeRule(rule.id); 
-                                                loadData()
-                                            }}>Удалить
+                                            name="text"
+                                            value={editedRule.text}
+                                            rows={3}
+                                            onChange={handleEditChange}
+                                        />
+                                    </div>
+
+                                    <div className={s.actions}>
+                                        <button
+                                            onClick={() => {
+                                                setEditedRule(null);
+                                            }}>
+                                            Отмена
                                         </button>
-                                    </td>
+
+                                        <button onClick={editRule}>
+                                            Сохранить
+                                        </button>
+                                    </div>
                                 </>
-                                }
-                            </tr> 
-                        
-                        ))}
-                    </tbody>
-                </table>
+                            ) : (
+                                <>
+                                    <div className={s.field}>
+                                        <span className={s.label}>Категория</span>
+                                        <span>{rule.category}</span>
+                                    </div>
+
+                                    <div className={s.field}>
+                                        <span className={s.label}>Текст правила</span>
+                                        <span>{rule.text}</span>
+                                    </div>
+
+                                    <div className={s.actions}>
+                                        <button
+                                            onClick={() => setEditedRule({ ...rule })}
+                                        >
+                                            Редактировать
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={async () => {
+                                                await removeRule(rule.id);
+                                                loadData();
+                                            }}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </section>
         </main>
     )

@@ -8,11 +8,11 @@ import { rulesTest } from '../test/testLandingData'
 import { filesListTest } from '../test/testFiles'
 import { useEffect, useState } from 'react'
 import { getLandingData } from '../API/LandingAPI'
+import { getRules } from '../API/RulesAPI'
 
 // const picUrl = "http://localhost:3000/passportFiles/"
 const picUrl = './photos'
 const photos_list: MyFile[] = filesListTest.filter(f => f.category === FileCategory.LANDING_PHOTO)
-const rules: Rule[] = rulesTest
 
 
 const row1 = photos_list.filter((_, id)=>id%2 !== 0)
@@ -22,10 +22,14 @@ const dubleRow2 = [...row2, ...row2, ...row2]
 
 function Landing(){   
     const [landingData, setLandingData] =  useState<LandingData>()
+    const [rules, setRules] =  useState<Rule[]>([])
     useEffect(()=>{
         getLandingData().then((data)=>{
             setLandingData(data)
         }).catch((err)=>console.error('loading landing mistake: ', err))
+        getRules().then((data)=>{
+            setRules(data)
+        }).catch((err)=>console.error('loading rules mistake: ', err))
     }, []) 
     if (!landingData){
         return <div>Загрузка...</div>

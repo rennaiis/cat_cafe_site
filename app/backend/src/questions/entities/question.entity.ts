@@ -20,7 +20,4 @@ export class Question {
 
   @Column('simple-array', { nullable: true })
   variants?: string[];
-
-  @OneToMany(() => Answer, (answer) => answer.question)
-  answers: Answer[];
 }

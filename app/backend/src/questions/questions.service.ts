@@ -18,16 +18,12 @@ export class QuestionsService {
   }
 
   async findAll() {
-    return await this.questionRepository.find(
-      {relations: ['answers']}
-    )
+    return await this.questionRepository.find()
   }
 
   async findOne(id: number): Promise<Question> {
     const question = await this.questionRepository.findOne({
-      where: {id}, 
-      relations: ['answers']
-    })
+      where: {id}})
     if (!question){
       throw new NotFoundException("no question with this id")
     }

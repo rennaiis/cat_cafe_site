@@ -13,8 +13,9 @@ function AdminHeader(){
                 <button className={s.navButton}><NavLink to={'/admin/editCats'}>Коты</NavLink></button>
                 <button className={s.navButton}><NavLink to={'/admin/editGallery'}>Галерея</NavLink></button>
                 <button className={s.navButton}><NavLink to={'/admin/recievedApplications'}>Заявки</NavLink></button>
-                <button className={s.navButton}><NavLink to={'/admin/editQuections'}>Пользователи</NavLink></button>
-                <button className={s.navButton}><NavLink to={'/admin/editGallery'}>Редактировать анкету</NavLink></button>
+                <button className={s.navButton}><NavLink to={'/admin/editUsers'}>Пользователи</NavLink></button>
+                <button className={s.navButton}><NavLink to={'/admin/editQuestions'}>Редактировать анкету</NavLink></button>
+                <button className={s.navButton}><NavLink to={'/admin/clients'}>Учёт посетителей</NavLink></button>
             </nav>
          </header>
         </>

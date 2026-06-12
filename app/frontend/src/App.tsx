@@ -12,6 +12,8 @@ import AdoptApplication from './pages/AdoptApplication'
 import RecievedApplications from './pages/admin/RecievedApplications'
 import ApplicationQuestions from './pages/admin/EditQuestions'
 import EditGallery from './pages/admin/EditGallery'
+import { catsListTest } from './test/testCatsList'
+import CLients from './pages/admin/Clients'
 
 const router = createBrowserRouter([
    {
@@ -34,8 +36,9 @@ const router = createBrowserRouter([
          {path: 'editLanding', element: <EditLanding/>}, 
          {path: 'editUsers', element: <EditUsers/>}, 
          {path: 'recievedApplications', element: <RecievedApplications/>}, 
-         {path: 'editQuections', element: <ApplicationQuestions/>}, 
-         {path: 'editGallery', element:<EditGallery/>}
+         {path: 'editQuestions', element: <ApplicationQuestions/>}, 
+         {path: 'editGallery', element:<EditGallery/>},
+         {path: 'clients', element: <CLients/>}
       ]
    }
 ])

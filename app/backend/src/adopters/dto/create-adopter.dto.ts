@@ -21,8 +21,7 @@ export class CreateAdopterDto {
     mobile?: string
 
     @IsEmail()
-    @IsOptional()
-    email?: string
+    email: string
 
     @IsString()
     @IsOptional()

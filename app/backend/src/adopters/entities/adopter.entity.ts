@@ -16,7 +16,7 @@ export class Adopter {
     @Column({type: 'varchar', length: 100, nullable: true})
     middle_name?: string
 
-    @Column({type: 'varchar', length: 12, nullable: true})
+    @Column({type: 'varchar', length: 20, nullable: true})
     mobile?: string
 
     @Column({type: 'varchar', length: 500, nullable: true})

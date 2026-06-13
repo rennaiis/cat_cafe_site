@@ -12,7 +12,7 @@ export class FilesController {
 
   @Post('uploadFiles')
   @UseInterceptors(
-    FilesInterceptor('files', 10, {
+    FilesInterceptor('files' /*, 10, {
       storage: diskStorage({
         destination: './catFiles', 
         filename: (req, file, callback)=>{
@@ -21,7 +21,7 @@ export class FilesController {
           callback(null, `${unique}${ext}`)
         }
       })
-    })
+    }*/)
   )
   async uploadFiles(
     @UploadedFiles() files: Express.Multer.File[], 

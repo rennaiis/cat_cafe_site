@@ -9,6 +9,8 @@ import { ColorType } from '../color_types/entities/color_type.entity';
 import * as fs from 'fs';
 import { CatsService } from '../cats/cats.service';
 import { ColorTypesService } from '../color_types/color_types.service';
+import sharp from 'sharp';
+import { join } from 'path';
 
 @Injectable()
 export class FilesService {
@@ -28,10 +30,16 @@ export class FilesService {
     createFileDto: CreateFileDto
   ): Promise<FileEntity[]> {
     if (!files || files.length === 0){
-      throw new BadRequestException;
+      throw new BadRequestException("put some files");
     }
     let attachedCat: Cat | undefined
     let attachedColorType: ColorType | undefined
+
+    const uploadFolder = './catFiles'
+    if (!fs.existsSync(uploadFolder)){
+      fs.mkdirSync(uploadFolder, {recursive: true})
+    }
+
     try{
       if (createFileDto.cat_id){
         attachedCat = await this.catService.findOne(createFileDto.cat_id)
@@ -40,14 +48,20 @@ export class FilesService {
         attachedColorType = await this.colorTypeService.findOne(createFileDto.color_type_id)
       }
     }catch(error){
-      this.deletePhysicalFiles(files)
       throw error 
     }
 
     const savedFiles = await Promise.all(files.map(async(file)=>{
+      const unique = Date.now()+'-' + Math.round(Math.random()*1e9)
+      const filename = unique + '.webp'
+      const filePath = join(uploadFolder, filename)
+      await sharp(file.buffer).resize({
+        width: 1200, 
+        withoutEnlargement: true
+      }).webp({quality: 75}).toFile(filePath)
       const newFile = this.fileRepository.create({
         name: file.originalname,
-        path: file.filename,
+        path: filename,
         category: createFileDto.category, 
         type: createFileDto.type, 
         cat: attachedCat, 
@@ -59,15 +73,15 @@ export class FilesService {
     return savedFiles
   }
 
-  private deletePhysicalFiles(
-    files: Express.Multer.File[]
-    ){
-    files.forEach(file => {
-      if (fs.existsSync(file.path)){
-        fs.unlinkSync(file.path)
-      }
-    })
-  }
+  // private deletePhysicalFiles(
+  //   files: Express.Multer.File[]
+  //   ){
+  //   files.forEach(file => {
+  //     if (fs.existsSync(file.path)){
+  //       fs.unlinkSync(file.path)
+  //     }
+  //   })
+  // }
   
   async findAll() {
     return await this.fileRepository.find({

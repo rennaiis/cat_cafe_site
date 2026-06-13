@@ -21,8 +21,8 @@ async function bootstrap() {
     origin: true,
     credentials: true
   })
-  app.useStaticAssets(join(process.cwd(), 'files'), {
-    prefix:'/files'
+  app.useStaticAssets(join(process.cwd(), 'catFiles'), {
+    prefix:'/catFiles'
   })
   app.use(
     session.default({

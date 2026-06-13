@@ -94,7 +94,7 @@ export class FilesService {
 
   async remove(id: number) {
     const file = await this.findOne(id)
-    const fullPath = `./uploads/${file.path}`
+    const fullPath = `./catFiles/${file.path}`
     if (fs.existsSync(fullPath)){
         fs.unlinkSync(fullPath)
     }

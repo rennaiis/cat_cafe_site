@@ -24,13 +24,4 @@ export class CreateFileDto {
     @IsBoolean()
     @IsOptional()
     is_approved: boolean
-
-    @IsString()
-    @IsNotEmpty()
-    name: string
-
-    @IsString()
-    @IsNotEmpty()
-    path: string
-
 }

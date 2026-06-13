@@ -10,11 +10,11 @@ import { extname } from 'path';
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
-  @Post('upload')
+  @Post('uploadFiles')
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       storage: diskStorage({
-        destination: './files', 
+        destination: './catFiles', 
         filename: (req, file, callback)=>{
           const unique = Date.now() + '-' + Math.round(Math.random()*1e9)
           const ext = extname(file.originalname)
@@ -27,7 +27,7 @@ export class FilesController {
     @UploadedFiles() files: Express.Multer.File[], 
     @Body() createFileDto: CreateFileDto
   ){
-    return this.filesService.createMany(files, createFileDto)
+    return await this.filesService.createMany(files, createFileDto)
   }
 
   @Get()

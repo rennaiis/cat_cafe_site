@@ -10,5 +10,6 @@ import { ColorTypesModule } from '../color_types/color_types.module';
   imports: [TypeOrmModule.forFeature([FileEntity]), CatsModule, ColorTypesModule],
   controllers: [FilesController],
   providers: [FilesService],
+  exports:[FilesService]
 })
 export class FilesModule {}

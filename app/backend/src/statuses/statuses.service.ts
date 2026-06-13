@@ -18,14 +18,14 @@ export class StatusesService {
 
   async findAll() {
     return await this.statusRepository.find({
-      relations: ['cats']
+      // relations: ['cats']
     })
   }
 
   async findOne(id: number) {
     const status = await this.statusRepository.findOne({
       where: {id}, 
-      relations: ['cats']
+      // relations: ['cats']
     })
     if (!status){
       throw new NotFoundException('no status with this id')

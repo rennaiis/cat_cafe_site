@@ -20,6 +20,6 @@ export class Status {
   })
   type: StatusType;
 
-  @OneToMany(() => Cat, (cat) => cat.status)
-  cats: Cat[];
+  // @OneToMany(() => Cat, (cat) => cat.status)
+  // cats?: Cat[];
 }

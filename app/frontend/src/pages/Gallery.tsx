@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/gallery.module.css';
-import { filesListTest } from '../test/testFiles';
 import type { MyFile } from '../types';
 import { FileType } from '../../../enums/FileType';
+import { FileCategory } from '../../../enums/FileCategory';
+import { createFiles, filesStorageURL, getFiles } from '../API/filesAPI';
 
-const files: MyFile[] = filesListTest
 function Gallery () {
-    const approvedImages = files.filter(file => file.type === FileType.PHOTO && file.is_approved !== false);
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const dto = {
+            category: FileCategory.GALLERY_PHOTO,
+            type: FileType.PHOTO, 
+            is_approved: false
+            }
+            try {
+            await createFiles([file], dto)
+            loadData()
+            } catch (error) {
+            console.error('Ошибка при загрузке файла:', error);
+            }
+        }
+    }
+    function loadData() {
+        getFiles().then((data)=>{
+            setFiles(data)
+        }).catch((err)=>console.error('loading rules mistake: ', err))
+    }
+    useEffect(()=> {loadData()}, [])
+    const [files, setFiles] = useState<MyFile[]>([])
+    const approvedImages = files.filter(file => file.type === FileType.PHOTO && file.category == FileCategory.GALLERY_PHOTO && file.is_approved);
     return (
         <>
         <div className={styles.galleryContainer}>    
@@ -19,11 +42,7 @@ function Gallery () {
                     accept="image/*"
                     id="cat-file-upload"
                     className={styles.fileUploadInput}
-                    onChange={(e) => {
-                        if (e.target.files && e.target.files[0]) {
-                            alert(`Файл ${e.target.files[0].name} выбран!`);
-                        }
-                    }}
+                    onChange={handleFileChange}
                 />            
             </div>        
             <div className={styles.grid}>
@@ -31,7 +50,7 @@ function Gallery () {
                     <div key={file.id} className={styles.card}>
                         <div className={styles.imageWrapper}>
                             <img 
-                                src={`${file.path}/${file.name}`} 
+                                src={`${filesStorageURL}/${file.path}`} 
                                 alt={file.name} 
                                 className={styles.image}
                                 loading="lazy" 

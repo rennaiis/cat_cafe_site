@@ -29,7 +29,9 @@ export class CatsService {
       adopter = await this.adopterService.findOne(createCatDto.adopter_id)
     }
     status = await this.statusService.findOne(createCatDto.status_id)
-    colorType = await this.colorTypeService.findOne(createCatDto.color_type_id)
+    if (createCatDto.color_type_id){
+      colorType = await this.colorTypeService.findOne(createCatDto.color_type_id)
+    }
     const cat = this.catRepository.create({
       ...createCatDto, 
       color_type: colorType, 

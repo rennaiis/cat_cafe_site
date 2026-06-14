@@ -8,7 +8,7 @@ export class CreateCatDto {
 
     @IsNotEmpty()
     @IsInt()
-    color_type_id: number;
+    color_type_id?: number;
 
     @IsOptional()
     @IsInt()

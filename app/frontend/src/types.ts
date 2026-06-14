@@ -39,6 +39,9 @@ export interface LandingData {
     [LandingItemType.CONTACT_PHONE]: string
 }
 
+export interface objectWithId {
+  id: number
+}
 export interface Rule {
     id: number
     text: string;
@@ -54,8 +57,8 @@ export interface Cat {
     birth_date?: Date
     accept_date?: Date
     adopt_date?: Date
-    color_type: ColorType
-    status: Status
+    color_type?: ColorType
+    status: Status | undefined
     adopter?: Adopter
     files: MyFile[]
     adopt_applications?: AdoptApplication[]
@@ -122,6 +125,21 @@ export interface FileDto {
     type: FileType
     category: FileCategory
     cat_id?: number
+    status_id: number
     color_type_id?: number
     is_approved: boolean
 }
+
+export interface CatDto {
+    status_id: number;
+    color_type_id?: number;
+    adopter_id?: number;
+    name: string;
+    gender: CatGender;
+    description?: string;
+    breed?: string;
+    birth_date?: string;
+    accept_date?: string;
+    adopt_date?: string;
+}
+

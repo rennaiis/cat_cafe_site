@@ -16,7 +16,6 @@ export class FilesService {
   constructor(
     @InjectRepository(FileEntity)
     private readonly fileRepository: Repository<FileEntity>,
-    private readonly catService: CatsService,
     private readonly colorTypeService: ColorTypesService
   ){}
   async create(createFileDto: CreateFileDto) {
@@ -25,52 +24,55 @@ export class FilesService {
   }
 
   async createMany(
-    files: Express.Multer.File[], 
-    createFileDto: CreateFileDto,
-    manager?: EntityManager
+  files: Express.Multer.File[],
+  createFileDto: CreateFileDto,
+  manager?: EntityManager
   ): Promise<FileEntity[]> {
-    const repository = manager ? manager.getRepository(FileEntity) : this.fileRepository
+    const repository = manager ? manager.getRepository(FileEntity):this.fileRepository
     if (!files || files.length === 0){
       throw new BadRequestException("put some files");
     }
-    let attachedCat: Cat | undefined
     let attachedColorType: ColorType | undefined
-
     const uploadFolder = './catFiles'
     if (!fs.existsSync(uploadFolder)){
-      fs.mkdirSync(uploadFolder, {recursive: true})
+      fs.mkdirSync(uploadFolder, { recursive: true })
     }
 
     try{
-      if (createFileDto.cat_id){
-        attachedCat = await this.catService.findOne(createFileDto.cat_id)
-      }
       if (createFileDto.color_type_id){
-        attachedColorType = await this.colorTypeService.findOne(createFileDto.color_type_id)
+        attachedColorType = await this.colorTypeService.findOne(
+          createFileDto.color_type_id
+        )
       }
     }catch(error){
-      throw error 
+      throw error
     }
 
-    const savedFiles = await Promise.all(files.map(async(file)=>{
-      const unique = Date.now()+'-' + Math.round(Math.random()*1e9)
-      const filename = unique + '.webp'
-      const filePath = join(uploadFolder, filename)
-      await sharp(file.buffer).resize({
-        width: 1200, 
-        withoutEnlargement: true
-      }).webp({quality: 75}).toFile(filePath)
-      const newFile = repository.create({
-        name: file.originalname,
-        path: filename,
-        category: createFileDto.category, 
-        type: createFileDto.type, 
-        cat: attachedCat, 
-        colorType: attachedColorType           
+    const savedFiles = await Promise.all(
+      files.map(async(file) => {
+        const unique = Date.now() + '-' + Math.round(Math.random() * 1e9)
+        const filename = unique + '.webp'
+        const filePath = join(uploadFolder, filename)
+        await sharp(file.buffer)
+          .resize({
+            width: 1200,
+            withoutEnlargement: true
+          })
+          .webp({ quality: 75 })
+          .toFile(filePath)
+
+        const newFile = repository.create({
+          name: file.originalname,
+          path: filename,
+          category: createFileDto.category,
+          type: createFileDto.type,
+          cat: createFileDto.cat_id ? ({ id: createFileDto.cat_id } as Cat) : undefined,
+          colorType: attachedColorType
+        })
+        const saved = await repository.save(newFile)
+        return saved
       })
-      const saved = await repository.save(newFile)
-      return saved
-    }))
+    )
     return savedFiles
   }
   

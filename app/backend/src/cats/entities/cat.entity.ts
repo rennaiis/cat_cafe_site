@@ -32,7 +32,7 @@ export class Cat {
     @Column({type: 'date', nullable: true})
     adopt_date?: Date
 
-    @ManyToOne(()=> ColorType, (colorType)=>colorType.id, {nullable: false})
+    @ManyToOne(()=> ColorType, (colorType)=>colorType.id, {nullable: true})
     @JoinColumn({name: 'color_type_id'})
     color_type?: ColorType
     

@@ -79,14 +79,14 @@ export class CatsService {
 
   async findAll() {
     return await this.catRepository.find({
-      relations: ['adopter', 'color_type', 'status', 'adopt_applications']
+      relations: ['adopter', 'color_type', 'status', 'adopt_applications', 'files']
     })
   }
 
   async findOne(id: number) {
     const cat = await this.catRepository.findOne({
       where: {id}, 
-      relations: ['adopter', 'color_type', 'status', 'adopt_applications']
+      relations: ['adopter', 'color_type', 'status', 'adopt_applications', 'files']
     })
     if (!cat) throw new NotFoundException()
     return cat

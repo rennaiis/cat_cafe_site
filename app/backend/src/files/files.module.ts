@@ -7,7 +7,7 @@ import { CatsModule } from '../cats/cats.module';
 import { ColorTypesModule } from '../color_types/color_types.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FileEntity]), CatsModule, ColorTypesModule],
+  imports: [TypeOrmModule.forFeature([FileEntity]), ColorTypesModule],
   controllers: [FilesController],
   providers: [FilesService],
   exports:[FilesService]

@@ -1,16 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  @Post()
-  create(@Body() createCatDto: CreateCatDto) {
-    return this.catsService.create(createCatDto);
-  }
+  @Post('create-full')
+  @UseInterceptors(
+    FilesInterceptor('files', 20)
+  )
+  async createFull(
+    @Body() payload: { cat: string },
+    @UploadedFiles() files: Express.Multer.File[]
+  ){
+      const catDto = JSON.parse(payload.cat)
+      return this.catsService.createFullCat(
+          catDto,
+          files
+      )
+}
+
 
   @Get()
   findAll() {

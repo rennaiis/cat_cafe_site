@@ -8,17 +8,17 @@ import { createFiles, filesStorageURL, getFiles } from '../API/filesAPI';
 function Gallery () {
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            const dto = {
-            category: FileCategory.GALLERY_PHOTO,
-            type: FileType.PHOTO, 
-            is_approved: false
+                const file = e.target.files[0];
+                const dto = {
+                category: FileCategory.GALLERY_PHOTO,
+                type: FileType.PHOTO, 
+                is_approved: false
             }
             try {
-            await createFiles([file], dto)
-            loadData()
+                await createFiles([file], dto)
+                loadData()
             } catch (error) {
-            console.error('Ошибка при загрузке файла:', error);
+                console.error('Ошибка при загрузке файла:', error);
             }
         }
     }

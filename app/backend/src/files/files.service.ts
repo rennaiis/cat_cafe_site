@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFileDto } from './dto/create-file.dto';
-import { UpdateFileDto } from './dto/update-file.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileEntity } from './entities/file.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Cat } from '../cats/entities/cat.entity';
 import { ColorType } from '../color_types/entities/color_type.entity';
 import * as fs from 'fs';
@@ -27,8 +26,10 @@ export class FilesService {
 
   async createMany(
     files: Express.Multer.File[], 
-    createFileDto: CreateFileDto
+    createFileDto: CreateFileDto,
+    manager?: EntityManager
   ): Promise<FileEntity[]> {
+    const repository = manager ? manager.getRepository(FileEntity) : this.fileRepository
     if (!files || files.length === 0){
       throw new BadRequestException("put some files");
     }
@@ -59,7 +60,7 @@ export class FilesService {
         width: 1200, 
         withoutEnlargement: true
       }).webp({quality: 75}).toFile(filePath)
-      const newFile = this.fileRepository.create({
+      const newFile = repository.create({
         name: file.originalname,
         path: filename,
         category: createFileDto.category, 
@@ -67,21 +68,11 @@ export class FilesService {
         cat: attachedCat, 
         colorType: attachedColorType           
       })
-      const saved = await this.fileRepository.save(newFile)
+      const saved = await repository.save(newFile)
       return saved
     }))
     return savedFiles
   }
-
-  // private deletePhysicalFiles(
-  //   files: Express.Multer.File[]
-  //   ){
-  //   files.forEach(file => {
-  //     if (fs.existsSync(file.path)){
-  //       fs.unlinkSync(file.path)
-  //     }
-  //   })
-  // }
   
   async findAll() {
     return await this.fileRepository.find({

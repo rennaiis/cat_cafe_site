@@ -1,4 +1,4 @@
-import type { Cat } from "../types";
+import type { Cat, CatDto } from "../types";
 const URL = "http://localhost:3000/cats"
 
 export const getYearsAgo = (years: number): Date => {
@@ -26,30 +26,29 @@ export async function getCats() {
 }
 
 export async function createCatWithFiles(
-    cat: Omit<Cat, 'id'>,
-    files: File[]
-){
-    const formData = new FormData()
-    formData.append(
-        'cat',
-        JSON.stringify(cat)
-    )
-    files.forEach(file => {
-        formData.append('files', file)
-    })
-    const res = await fetch(
-        `${URL}/create-full`,
-        {
-            credentials: 'include',
-            method: 'POST',
-            body: formData
+    cat: Omit<CatDto, 'id'>,
+    files: File[]){
+        const formData = new FormData()
+        formData.append(
+            'cat',
+            JSON.stringify(cat)
+        )
+        files.forEach(file => {
+            formData.append('files', file)
+        })
+        const res = await fetch(
+            `${URL}/create-full`,
+            {
+                credentials: 'include',
+                method: 'POST',
+                body: formData
+            }
+        )
+        if (!res.ok){
+            throw new Error('cannot create cat')
         }
-    )
-    if (!res.ok){
-        throw new Error('cannot create cat')
+        return await res.json()
     }
-    return await res.json()
-}
 
 export async function createCat(cat: Omit<Cat, 'id'>){
     const res = await fetch(URL, {

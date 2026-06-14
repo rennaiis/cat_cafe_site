@@ -83,7 +83,6 @@ export interface Question {
   is_open: boolean;
   one_answer?: boolean;
   variants?: string[];
-  answers?: Answer[];
 }
 
 export interface Answer {
@@ -94,7 +93,11 @@ export interface Answer {
   question: Question;
   application: AdoptApplication;
 }
-
+export interface AdoptApplicationDto{
+  adopter_id: number;
+  cat_id: number;
+  application_status: ApplicationStatus;
+}
 export interface AdoptApplication {
     id: number
     adopter: Adopter
@@ -113,4 +116,12 @@ export interface Adopter {
     contact?: string
     cats?: Cat[]
     adopt_applications?: AdoptApplication[]
+}
+
+export interface FileDto {
+    type: FileType
+    category: FileCategory
+    cat_id?: number
+    color_type_id?: number
+    is_approved: boolean
 }

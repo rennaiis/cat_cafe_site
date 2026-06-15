@@ -28,12 +28,20 @@
 .itemCard {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1.5rem;
     padding: 1rem;
     border: 1px solid var(--elements-background-color);
     border-radius: 12px;
     background:white;
+}
+.itemCard button {
+    max-width: none;
+}
+
+.itemCard > * {
+    flex: 1 1 0%;
+    min-width: 0;
 }
 
 .itemCardVertical {
@@ -45,6 +53,8 @@
     border-radius: 12px;
     background:white;
 }
+
+
 .field {
     display: grid;
     gap: 0.4rem;
@@ -84,11 +94,9 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 700px) {
     .itemCard {
-        grid-template-columns:
-            minmax(150px, 200px)
-            1fr
-            auto;
+        flex-direction: column;
+        align-items:flex-start
     }
 }

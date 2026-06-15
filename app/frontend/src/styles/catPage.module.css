@@ -22,6 +22,17 @@
     aspect-ratio: 4/3;
 }
 
+.mainCardImg {
+    width: 70%;
+    border-radius: 16px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+}
+.noMargin{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .thumbsRow {
     display: flex;
     gap: 10px;

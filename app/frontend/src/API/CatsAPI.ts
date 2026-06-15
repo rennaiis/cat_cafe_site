@@ -60,7 +60,7 @@ export async function createCat(cat: Omit<Cat, 'id'>){
     return res.json()
 }
 
-export async function updateCat(cat:Omit<Cat, 'id'>, id: number) {
+export async function updateCat(cat: CatDto, id: number) {
     const res = await fetch(`${URL}/${id}`, {
         credentials: 'include',
         method: 'PATCH', 

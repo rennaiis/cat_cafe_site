@@ -3,16 +3,23 @@ import { catsListTest } from "../test/testCatsList"
 import { filesListTest } from "../test/testFiles"
 import type { Adopter, Cat, MyFile } from "../types"
 import s from '../styles/catApplication.module.css'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getCats } from "../API/CatsAPI"
+import { filesStorageURL } from "../API/filesAPI"
 
-const filesList: MyFile[] = filesListTest
-const catsList: Cat[] = catsListTest
-const catsInCafe: Cat[]  = catsList.filter(cat => cat.status.type === StatusType.IN_CAFE)
 interface FillDataProps {
     onNext: (catId: number, adopterData: Omit<Adopter, 'id'>)=>void
 }
 
 function FillData({onNext}:FillDataProps){
+    function loadData() {
+        getCats().then((data: Cat[])=>{
+            const catsInCafe  = data.filter(cat => cat.status?.type === StatusType.IN_CAFE)
+            setCats(catsInCafe)
+            }).catch((err)=>console.error('loading cats mistake: ', err))
+        }
+    useEffect(()=>{loadData()}, [])
+    const [cats, setCats] = useState<Cat[]>([])
     const [selectedCat, setSelectedCat] = useState<Cat | null>(null)
     const [formData, setFormData] = useState<Omit<Adopter, 'id'>>({
         first_name: '', 
@@ -42,14 +49,14 @@ function FillData({onNext}:FillDataProps){
         <main className="content-block">
             <h3>Выберите котика</h3>
             <div className={s.cats} >
-            {catsInCafe.map((cat, idx)=>(
+            {cats.map((cat, idx)=>(
                 <div     
-                    className={ (selectedCat === cat) ? s.cardCat + ' scale '+ s.catCardChosen : s.cardCat + ' scale'} 
+                    className={ (selectedCat === cat) ? s.cardCat + ' '+ s.catCardChosen : s.cardCat} 
                     key={`${idx}-${cat.id}`}
                     onClick={() => setSelectedCat(cat)}
                     style={{ cursor: 'pointer' }}
                 >
-                    <img className={s.catImg}  src={`${cat.files[0].path}/${cat.files[0].name}`} alt="row2" />
+                    <img className={s.catImg}  src={`${filesStorageURL}/${cat.files[0].path}`} alt="row2" />
                     <h5>{cat.name}</h5>
                 </div>
             ))}
@@ -108,7 +115,7 @@ function FillData({onNext}:FillDataProps){
                         onChange={handleInputChange} />
                 </div>
                 <div>
-                    <label htmlFor="contact" className="little-text">Другой контакт (ВК, телеграм, не обязательно) </label>
+                    <label htmlFor="contact" className="little-text">Другой контакт (ВК, телеграм. не обязательно) </label>
                     <input 
                         value={formData.contact}
                         type="text" 

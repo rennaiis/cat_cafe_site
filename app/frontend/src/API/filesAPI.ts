@@ -11,6 +11,14 @@ export async function getFiles() {
    return res.json()
 }
 
+export async function approveFile(id: number) {
+   const res =  await fetch(`${URL}/${id}/approve`, {
+      credentials: 'include',
+      method: 'PATCH'
+   });
+   if (!res.ok) throw new Error(`can't get files`)
+   return res.json()
+}
 
 
 export async function removeFile(id: number) {

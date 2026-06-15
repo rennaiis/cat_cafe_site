@@ -25,6 +25,8 @@
 }
 
 .deleteButton{
+    color: var(--light-stroke-color);
+    background-color: var(--red-color);
     position:absolute;
     top:4px;
     right:4px;
@@ -32,9 +34,24 @@
     transition:0.2s;
 }
 
+.approveButton{
+    color: var(--light-stroke-color);
+    background-color: var(--green-color);
+    position:absolute;
+    top:4px;
+    left:4px;
+    opacity:0;
+    transition:0.2s;
+}
+
 .previewItem:hover .deleteButton{
     opacity:1;
 }
+
+.previewItem:hover .approveButton{
+    opacity:1;
+}
+
 
 .title {
     text-align: center;
@@ -52,9 +69,7 @@
     .grid { column-count: 2; }
 }
 
-@media (max-width: 600px) {
-    .grid { column-count: 1; }
-}
+
 
 .card {
     background: #fff;

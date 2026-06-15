@@ -11,7 +11,13 @@
     flex-direction: column;
     gap: 1rem
 }
-
+.card{
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--elements-background-color);
+    border-radius: 12px;
+    background:white;
+}
 .row{
     display: flex;
     gap: 1rem;
@@ -81,10 +87,101 @@
     flex-wrap: wrap;
 }
 
+.appsGrid {
+    display: grid;
+    grid-template-columns: minmax(40px, auto) minmax(90px, auto) repeat(1, minmax(120px, 1fr)) minmax(130px, auto) minmax(220px, auto);
+    align-items: start;
+}
+
+.adoptersGrid {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.5fr) minmax(220px, 2fr) minmax(100px, 1fr) minmax(140px, auto);
+    align-items: start;
+}
+
+.gridTh {
+    font-weight: bold;
+    padding: 8px;
+
+}
+
+.gridTd {
+    padding: 8px;
+    word-break: break-word;
+    overflow-wrap: anywhere; 
+}
+
+.gridFullWidth {
+    grid-column: 1 / -1;
+    padding: 16px;
+}
+
+.actions {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.approved {
+    background-color: var(--green-color);
+    padding: 1rem;
+    border-radius: 5px
+
+}
+.rejected {
+    background-color: var(--red-color);
+    padding: 1rem;
+    border-radius: 5px
+}
+.new {
+    background-color: var(--yellow-color);
+    padding: 1rem;
+    border-radius: 5px
+}
+
+@media (max-width: 1024px) {
+    .container{
+        width: 90%;
+    }
+    .appsGrid, .adoptersGrid {
+        grid-template-columns: 1fr;
+        gap: 0px;
+    }
+
+    .hideOnMobile {
+        display: none;
+    }
+
+    .gridTd {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3px;
+        align-items: start;
+        justify-items: start;
+        padding: 4px 8px;
+    }
+
+    .gridTd::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .gridFullWidth {
+        grid-column: auto;
+        padding: 8px;
+    }
+
+    .appsGrid > .gridTd:nth-of-type(9n),
+    .adoptersGrid > .gridTd:nth-of-type(6n) {
+        margin-bottom: 10px;
+    }
+}
+
+
 @media (min-width: 768px) {
     .itemCard {
         grid-template-columns: 180px 1fr auto;
-        align-items: start;
+        align-items: flex-start;
     }
 
     .actions {

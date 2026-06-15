@@ -93,9 +93,14 @@ export interface Answer {
   answer: string;
   question_id: number;
   application_id: number;
-  question: Question;
-  application: AdoptApplication;
 }
+
+export interface AnswerDTO {
+  answer: string;
+  question_id: number;
+  application_id: number;
+}
+
 export interface AdoptApplicationDto{
   adopter_id: number;
   cat_id: number;
@@ -121,11 +126,22 @@ export interface Adopter {
     adopt_applications?: AdoptApplication[]
 }
 
+
+export interface AdopterDTO {
+    id: number
+    first_name: string
+    last_name: string
+    middle_name?: string
+    mobile?: string
+    email: string
+    contact?: string
+}
+
+
 export interface FileDto {
     type: FileType
     category: FileCategory
     cat_id?: number
-    status_id: number
     color_type_id?: number
     is_approved: boolean
 }

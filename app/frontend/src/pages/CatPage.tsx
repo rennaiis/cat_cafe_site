@@ -1,6 +1,7 @@
 import type { Cat } from "../types"
 import style from "../styles/catPage.module.css" 
 import { calculateAge, getYearsAgo } from "../test/testCatsList";
+import { filesStorageURL } from "../API/filesAPI";
 
 interface CatPageProps {
     cat: Cat;
@@ -24,7 +25,7 @@ function CatPage({ cat }: CatPageProps) {
                     {cat.files && cat.files.length > 0 ? (
                         <div>
                             <img 
-                                src={`${cat.files[0].path}/${cat.files[0].name}`} 
+                                src={`${filesStorageURL}/${cat.files[0].path}`}
                                 alt={cat.name} 
                                 className={style.mainImg}
                             />
@@ -34,7 +35,7 @@ function CatPage({ cat }: CatPageProps) {
                                     {cat.files.slice(1).map((file, idx) => (
                                         <img 
                                             key={idx}
-                                            src={`${file.path}/${file.name}`} 
+                                            src={`${filesStorageURL}/${file.path}`}
                                             alt={`${cat.name} фото ${idx + 2}`} 
                                             className={style.thumbImg}
                                         />
@@ -54,7 +55,7 @@ function CatPage({ cat }: CatPageProps) {
                     
                     <div className={style.badgeWrapper}>
                         <span className={style.badge}>
-                            {cat.status.type}
+                            {cat.status?.type}
                         </span>
                     </div>
 
@@ -63,9 +64,14 @@ function CatPage({ cat }: CatPageProps) {
                             <div className={style.featureLabel}>Пол:</div>
                             <div className={style.featureValue}>{cat.gender}</div>
                         </div>
+                        {cat.breed ? 
+                        <div className={style.featureRow}>
+                            <div className={style.featureLabel}>Порода:</div>
+                            <div className={style.featureValue}>{cat.breed}</div>
+                        </div> : <></>}
                         {cat.birth_date?
                         <div className={style.featureRow}>
-                            <div className={style.featureLabel}>возраст:</div>
+                            <div className={style.featureLabel}>Возраст:</div>
                             <div className={style.featureValue}>{calculateAge(cat.birth_date)}</div>
                         </div>
                         : <></>}

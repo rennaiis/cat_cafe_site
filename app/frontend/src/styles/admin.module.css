@@ -125,13 +125,15 @@
 .approved {
     background-color: var(--green-color);
     padding: 1rem;
-    border-radius: 5px
+    border-radius: 5px;
+    color: var(--light-stroke-color)
 
 }
 .rejected {
     background-color: var(--red-color);
     padding: 1rem;
-    border-radius: 5px
+    border-radius: 5px;
+    color: var(--light-stroke-color)
 }
 .new {
     background-color: var(--yellow-color);

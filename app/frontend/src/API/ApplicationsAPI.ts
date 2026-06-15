@@ -1,3 +1,4 @@
+import { ApplicationStatus } from "../../../enums/ApplicationStatus";
 import type { AdoptApplication, AdoptApplicationDto } from "../types";
 
 const URL = "http://localhost:3000/adopt-applications"
@@ -20,6 +21,31 @@ export async function createAdoptApplication(application:AdoptApplicationDto){
     if (!res.ok) throw new Error("cant create application")
     return await res.json()
 }
+
+export async function approveApplication(id: number) {
+     const res = await fetch(`${URL}/${id}`, {
+        credentials: 'include',
+        method: 'PATCH', 
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            application_status: ApplicationStatus.APPROVED
+        })
+    })
+    return await res.json()
+}
+export async function rejectApplication(id: number) {
+     const res = await fetch(`${URL}/${id}`, {
+        credentials: 'include',
+        method: 'PATCH', 
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            application_status: ApplicationStatus.REJECTED
+        })
+    })
+    return await res.json()
+    
+}
+
 
 export async function updateAdoptApplication(application:Omit<AdoptApplication, 'id'>, id: number) {
     const res = await fetch(`${URL}/${id}`, {

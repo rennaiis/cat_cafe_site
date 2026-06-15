@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, type ChangeEvent } from 'react';
 import type { AdoptApplication, Adopter, AdopterDTO } from '../../types';
 import styles from '../../styles/admin.module.css';
-import { getAdoptApplications, removeAdoptApplication } from '../../API/ApplicationsAPI';
+import { approveApplication, getAdoptApplications, rejectApplication, removeAdoptApplication } from '../../API/ApplicationsAPI';
 import { getAdopters, removeAdopter, updateAdopter } from '../../API/AdoptersAPI';
 import { NavLink } from 'react-router-dom'
 import { ApplicationStatus } from '../../../../enums/ApplicationStatus';
@@ -58,14 +58,6 @@ const RecievedApplications: React.FC = () => {
         }));
     };
 
-    const handleApprove = (id: number) => {
-        console.log('Одобрена заявка с ID:', id);
-    };
-
-    const handleReject = (id: number) => {
-        console.log('Отклонена заявка с ID:', id);
-    };
-
     
     if (!applications || !adopters){
         return (
@@ -84,10 +76,10 @@ const RecievedApplications: React.FC = () => {
                     <div className={`${styles.gridTh} ${styles.hideOnMobile}`}>Действия</div>
                     {applications.map((app) => (
                         <Fragment key={app.id}>
-                            <div className={styles.gridTd + ' ' +
-                                app.application_status == ApplicationStatus.APPROVED ? 
+                            <div className={`${styles.gridTd} ${
+                                (app.application_status == ApplicationStatus.APPROVED) ? 
                                 styles.approved : app.application_status == ApplicationStatus.NEW ?
-                                styles.new : styles.rejected
+                                styles.new : styles.rejected}`
                             }>{app.application_status}</div>
                             <div className={styles.gridTd} data-label="Кот">
                                 <NavLink to={`/cats/${app.cat.id}`}>{app.cat.name}</NavLink>
@@ -101,8 +93,14 @@ const RecievedApplications: React.FC = () => {
                                 <div>{app.adopter.email}</div>
                             </div>
                             <div className={`${styles.gridTd} ${styles.actions}`} data-label="Действия">
-                                <button type="button" onClick={() => handleApprove(app.id)}>Одобрить</button>
-                                <button type="button" onClick={() => handleReject(app.id)}>Отклонить</button>
+                                <button type="button" onClick={async () => {
+                                    await approveApplication(app.id)
+                                    loadData()
+                                }}>Одобрить</button>
+                                <button type="button" onClick={async () => {
+                                    await rejectApplication(app.id)
+                                    loadData()
+                                }}>Отклонить</button>
                                 <button type="button" onClick={async () => {
                                     await removeAdoptApplication(app.id)
                                     loadData()                               

@@ -14,6 +14,8 @@ import EditGallery from './pages/admin/EditGallery'
 import CLients from './pages/admin/Clients'
 import AddCat from './pages/admin/AddCat'
 import AdoptApplicationForm from './pages/AdoptApplication'
+import CatPage from './pages/CatPage'
+import EditCat from './pages/admin/EditCat'
 
 const router = createBrowserRouter([
    {
@@ -24,6 +26,7 @@ const router = createBrowserRouter([
          {path: 'cats', element: <Cats/>}, 
          {path: 'gallery', element: <Gallery/>}, 
          {path: 'login', element: <Login/>}, 
+         {path: 'cats/:id', element: <CatPage/>},
          {path: 'adoptApplication', element: <AdoptApplicationForm/>}
       ],
    }, 
@@ -33,6 +36,7 @@ const router = createBrowserRouter([
       children: [
          {index: true, element: <EditLanding/>},
          {path: 'editCats', element: <EditCats/>},
+         {path: 'editCats/:id', element: <EditCat/>},
          {path: 'editLanding', element: <EditLanding/>}, 
          {path: 'editUsers', element: <EditUsers/>}, 
          {path: 'recievedApplications', element: <RecievedApplications/>}, 

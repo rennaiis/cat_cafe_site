@@ -8,6 +8,8 @@
     min-width: 0;
     gap: 10px;
     width: 100%; 
+    max-width: 500px;
+    
 }
 
 .cardCat > *{

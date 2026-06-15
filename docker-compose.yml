@@ -33,6 +33,7 @@ services:
     volumes: 
       - ./app:/app
       - /app/backend/node_modules
+      - ./catFiles:/app/catFiles
 
   
   

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import s from '../../styles/admin.module.css'
 import catStyle from '../../styles/catPage.module.css' 
 import { useEffect, useState, type ChangeEvent } from "react"
@@ -10,7 +10,7 @@ import { getCats, removeCat, updateCat } from '../../API/CatsAPI'
 import { filesStorageURL } from '../../API/filesAPI'
 import { getAdopters } from '../../API/AdoptersAPI'
 function EditCats(){
-        
+    const navigate = useNavigate()        
     const [statusForm, setStatusForm] = useState<Omit<Status, 'id'>>({
         status: '', 
         color: '#FFFFFF', 
@@ -180,7 +180,7 @@ function EditCats(){
                     }
                     }>Удалить</button>
                     <button onClick={()=>{setEditedCat(cat)}}>Редактировать</button>
-                    <button>Подробнее</button>
+                    <button onClick={()=>navigate(`${cat.id}`)}>Подробнее</button>
                 </div>
                 </>}  
             </div>

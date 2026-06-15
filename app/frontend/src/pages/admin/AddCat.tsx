@@ -7,7 +7,7 @@ import { getStatuses } from '../../API/StatusesAPI'
 import { CatGender } from '../../../../enums/CatGender'
 import { createCatWithFiles, getYearsAgo } from '../../API/CatsAPI'
 import { getAdopters } from '../../API/AdoptersAPI'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 function AddCat(){
@@ -37,9 +37,7 @@ function AddCat(){
             setAdopters(data)
         }).catch((err)=>console.error('loading adopters mistake: ', err))
     }
-    
     const genders = Object.values(CatGender)
-
     const handleRelationChange = <T extends objectWithId>(
         fieldName: keyof Omit<Cat, 'id'>, 
         dataSource: T[]
@@ -55,7 +53,7 @@ function AddCat(){
             }
         }
     }
-    const handleFormChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const handleFormChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         if (name == 'age'){
             const newValue = getYearsAgo(Number(value))
@@ -145,7 +143,16 @@ function AddCat(){
                         onChange={handleFormChange} 
                         required
                     />
-                </div>              
+                </div>
+                <div>
+                    <label>Описание:</label>
+                    <textarea 
+                        name="description"
+                        value={newCat.description} 
+                        onChange={handleFormChange} 
+                        required
+                    />
+                </div>                   
                 <div>
                     <label>Пол:</label>
                     <select

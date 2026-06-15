@@ -22,6 +22,7 @@ function Gallery () {
             }
         }
     }
+    
     function loadData() {
         getFiles().then((data)=>{
             setFiles(data)

@@ -7,16 +7,14 @@ import { getStatuses } from '../../API/StatusesAPI'
 import { CatGender } from '../../../../enums/CatGender'
 import { createCatWithFiles, getYearsAgo } from '../../API/CatsAPI'
 import { getAdopters } from '../../API/AdoptersAPI'
-import { FileCategory } from '../../../../enums/FileCategory'
-import { FileType } from '../../../../enums/FileType'
-import { createFiles } from '../../API/filesAPI'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 
 function AddCat(){
     const [statuses, setStatuses] = useState<Status[]>([])
     const [adopters, setAdopters] = useState<Adopter[]>([])
     const [files, setFiles] = useState<File[]>([])
-
+    const navigate = useNavigate()
     const [newCat, setNewCat] = useState<Omit<Cat, 'id'>>({
         name: '', 
         description: '', 
@@ -97,6 +95,7 @@ function AddCat(){
 
     async function addNewCat(e: React.FormEvent) {
         e.preventDefault()
+        
         try {
             if (!newCat.name || !newCat.status) {
                 return
@@ -111,7 +110,8 @@ function AddCat(){
                 adopt_date: newCat.adopt_date? new Date(newCat.adopt_date).toISOString().split('T')[0] : undefined,
                 birth_date: newCat.birth_date ? new Date(newCat.birth_date).toISOString().split('T')[0] : undefined,       
             }, files)
-            loadData()
+            navigate(-1)
+            loadData()            
         } catch (err) {
             console.error('create error', err)
         }

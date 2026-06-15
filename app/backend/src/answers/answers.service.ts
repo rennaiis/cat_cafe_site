@@ -33,14 +33,14 @@ export class AnswersService {
 
   async findAll() {
     return await this.answerRepository.find({
-      relations: ['question', 'adoptApplication'],
+      relations: ['question', 'application'],
     });
   }
 
   async findOne(id: number) {
     const answer = await this.answerRepository.findOne({
       where: { id },
-      relations: ['question', 'adoptApplication'],
+      relations: ['question', 'application'],
     });
     
     if (!answer) {

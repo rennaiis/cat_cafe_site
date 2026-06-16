@@ -5,11 +5,13 @@ import { UpdateFileDto } from './dto/update-file.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
+  @Public()
   @Post('uploadFiles')
   @UseInterceptors(
     FilesInterceptor('files' /*, 10, {

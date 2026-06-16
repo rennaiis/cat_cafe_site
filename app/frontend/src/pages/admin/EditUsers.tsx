@@ -140,7 +140,7 @@ function EditUsers(){
                                 {user.login}
                             </div>
                             <div className={styles.gridTd} data-label="Пароль">
-                                {user.password_hash}
+                               *****
                             </div>
                             <div className={styles.gridTd} data-label="Роль">
                                 {user.role}

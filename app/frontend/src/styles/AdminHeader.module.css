@@ -17,5 +17,5 @@
     background-color: var(--elements-background-color);
     font-weight: 600;
     max-height: 2rem;
-
+    box-shadow: none;
 }

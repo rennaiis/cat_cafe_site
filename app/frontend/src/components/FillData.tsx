@@ -1,7 +1,5 @@
 import { StatusType } from "../../../enums/StatusType"
-import { catsListTest } from "../test/testCatsList"
-import { filesListTest } from "../test/testFiles"
-import type { Adopter, Cat, MyFile } from "../types"
+import type { Adopter, Cat } from "../types"
 import s from '../styles/catApplication.module.css'
 import { useEffect, useState } from "react"
 import { getCats } from "../API/CatsAPI"

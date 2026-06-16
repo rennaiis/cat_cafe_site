@@ -6,7 +6,6 @@ import type { Adopter, Cat, objectWithId, Status } from "../../types"
 import { StatusType } from "../../../../enums/StatusType"
 import { createStatus, getStatuses, removeStatus, updateStatus } from "../../API/StatusesAPI"
 import { getCats, removeCat, updateCat } from '../../API/CatsAPI'
-
 import { filesStorageURL } from '../../API/filesAPI'
 import { getAdopters } from '../../API/AdoptersAPI'
 function EditCats(){

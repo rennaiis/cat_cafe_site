@@ -1,7 +1,7 @@
 import { useState } from "react"
 import FillAnket from "../components/FillAnket"
 import FillData from "../components/FillData"
-import type { AdoptApplication, Adopter, Cat } from "../types"
+import type { AdoptApplication, Adopter } from "../types"
 import { createAdopter } from "../API/AdoptersAPI"
 import { createAdoptApplication } from "../API/ApplicationsAPI"
 import { ApplicationStatus } from "../../../enums/ApplicationStatus"
@@ -11,7 +11,6 @@ function AdoptApplicationForm(){
     const [applicationId, setApplicationId] = useState<number|null>(null)
    const handleDataSubmit = async (catId: number, adopterData: Omit<Adopter, 'id'>)=>{
     try{
-
         const adopter: Adopter = await createAdopter(adopterData)
         if (!adopter){
             throw new Error("adopter not created")

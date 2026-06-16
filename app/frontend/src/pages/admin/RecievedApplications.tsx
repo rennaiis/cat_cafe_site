@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, type ChangeEvent } from 'react';
-import type { AdoptApplication, Adopter, AdopterDTO } from '../../types';
+import type { AdoptApplication, Adopter } from '../../types';
 import styles from '../../styles/admin.module.css';
 import { approveApplication, getAdoptApplications, rejectApplication, removeAdoptApplication } from '../../API/ApplicationsAPI';
 import { getAdopters, removeAdopter, updateAdopter } from '../../API/AdoptersAPI';

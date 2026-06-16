@@ -5,6 +5,7 @@ import type { LandingItemType } from "../../enums/LandingItemType";
 import type { CatGender } from "../../enums/CatGender";
 import type { StatusType } from "../../enums/StatusType";
 import type { ApplicationStatus } from "../../enums/ApplicationStatus";
+import type { UserRole } from "../../enums/UserRole";
 
 export interface MyFile {
     id: number,
@@ -159,3 +160,9 @@ export interface CatDto {
     adopt_date?: string;
 }
 
+export interface User {
+    id: number
+    login: string
+    password_hash: string;
+    role: UserRole
+}

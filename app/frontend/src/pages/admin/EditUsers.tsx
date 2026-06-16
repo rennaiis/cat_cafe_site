@@ -146,7 +146,13 @@ function EditUsers(){
                                 {user.role}
                             </div>
                             <div className={`${styles.gridTd} ${styles.actions}`}>
-                                <div><button type="button" onClick={()=>setEditedUser(user)}>Редактировать</button></div>
+                                <div><button type="button" onClick={()=>setEditedUser({
+                                    login: user.login,
+                                    id: user.id,
+                                    password_hash: '', 
+                                    role: user.role
+                                
+                                })}>Редактировать</button></div>
                                 <div><button type="button" 
                                     onClick={async ()=> {
                                         await removeUser(user.id)

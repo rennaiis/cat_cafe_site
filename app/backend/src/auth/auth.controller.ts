@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Public } from './session-auth.guard';
+import { LocalGuard } from './local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  @UseGuards()
+  @Public()
+  @UseGuards(LocalGuard)
   @Post('login')
   login(@Request() req){
     return req.user

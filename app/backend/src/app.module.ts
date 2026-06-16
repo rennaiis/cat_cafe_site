@@ -15,6 +15,8 @@ import { AnswersModule } from './answers/answers.module';
 import { QuestionsModule } from './questions/questions.module';
 import { RulesModule } from './rules/rules.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { SessionAuthGuard } from './auth/session-auth.guard';
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true
@@ -37,6 +39,9 @@ import { AuthModule } from './auth/auth.module';
   }), LandingDataModule, FilesModule, CatsModule, UsersModule, StatusesModule, ColorTypesModule, AdoptApplicationsModule, AdoptersModule, AnswersModule, QuestionsModule, RulesModule, AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD, 
+    useClass: SessionAuthGuard
+  }],
 })
 export class AppModule {}

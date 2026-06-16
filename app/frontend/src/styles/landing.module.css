@@ -149,9 +149,9 @@
   transform: translateY(-4px);
 }
 
-.priceCard h6 {
+.priceCard h3 {
     margin: 5px;
-  font-size: clamp(15px, 1.2vw + 12px, 22px);
+  /* font-size: clamp(15px, 1.2vw + 12px, 22px); */
 }
 
 .priceValue {

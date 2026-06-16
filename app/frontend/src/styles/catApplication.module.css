@@ -8,6 +8,8 @@
     min-width: 0;
     gap: 10px;
     width: 100%; 
+    max-width: 300px;
+    
 }
 .form{
     display: flex;
@@ -41,6 +43,10 @@
     padding: 1%;
 }
 
+.catImg{
+    aspect-ratio: 1/1;
+}
+
 .header{
     text-align: center;
     width: 100%
@@ -54,5 +60,10 @@
     gap: 1rem;
     border-radius: 10px;
     width: 95%;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 100px), 1fr));
+    grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 250px) {
+    .cats {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
 }

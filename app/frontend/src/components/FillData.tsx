@@ -1,6 +1,7 @@
 import { StatusType } from "../../../enums/StatusType"
 import type { Adopter, Cat } from "../types"
 import s from '../styles/catApplication.module.css'
+import adminStyles from '../styles/admin.module.css'
 import { useEffect, useState } from "react"
 import { getCats } from "../API/CatsAPI"
 import { filesStorageURL } from "../API/filesAPI"
@@ -52,7 +53,6 @@ function FillData({onNext}:FillDataProps){
                     className={ (selectedCat === cat) ? s.cardCat + ' '+ s.catCardChosen : s.cardCat} 
                     key={`${idx}-${cat.id}`}
                     onClick={() => setSelectedCat(cat)}
-                    style={{ cursor: 'pointer' }}
                 >
                     <img className={s.catImg}  src={`${filesStorageURL}/${cat.files[0].path}`} alt="row2" />
                     <h5>{cat.name}</h5>
@@ -60,7 +60,7 @@ function FillData({onNext}:FillDataProps){
             ))}
             </div>
             <h3>Заполните данные о себе</h3>
-            <form className = {s.form} onSubmit={handleSubmit}>
+            <form className = {adminStyles.itemCardVertical} onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="first_name" className="little-text">Имя</label>
                     <input 

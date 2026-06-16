@@ -77,23 +77,23 @@ function Landing(){
 
             <div className={s.priceContainer}>
                 <div className={s.priceCard  + ' card'}>
-                    <h6>Первый час</h6>
+                    <h3>Первый час</h3>
                     <div className={s.priceValue}> {landingData.first_hour_price_standart} руб./мин ({Number(landingData.first_hour_price_standart)*60} в час)</div>
                     <p className={s.priceNote}>Следующие часы:</p>
                     <div className={s.priceValue}> {landingData.following_hours_price_standart} руб./мин, {Number(landingData.following_hours_price_standart)*60} в час</div>
                 </div>
 
                 <div className={s.priceCard + ' card'}>
-                <h6>Школьникам и студентам</h6>
-                <div className={s.priceValue}>5 руб./мин</div>
+                <h3>Школьникам и студентам</h3>
+                <div className={s.priceValue}> {landingData.students_price} руб./мин</div>
                 <p className={s.priceNote}>По будням, с 01.09 по 31.05</p>
                 <p className={s.priceNote}>при наличии студенческого</p>
                 </div>
 
                 <div className={s.priceCard + ' card'}>
-                <h6>Группам от 10 человек</h6>
-                <div className={s.priceValue}>скидка 10%</div>
-                <p className={s.priceNote}>Не суммируется с другими акциями</p>
+                <h3>Группам от {landingData.group_people_amount} человек</h3>
+                <div className={s.priceValue}>скидка {landingData.group_discount}%</div>
+                <p className={s.priceNote}>{landingData.group_people_conditions}</p>
                 </div>
             </div>
             </div>

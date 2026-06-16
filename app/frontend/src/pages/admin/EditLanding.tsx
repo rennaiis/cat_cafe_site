@@ -1,20 +1,26 @@
 import React, { useEffect, useState, type ChangeEvent } from "react"
 import { LandingItemType } from "../../../../enums/LandingItemType"
-import type { LandingData, Rule } from "../../types"
-import { rulesTest } from "../../test/testLandingData"
+import galleryStyles from '../../styles/gallery.module.css';
+import type { LandingData, MyFile, Rule } from "../../types"
 import s from '../../styles/admin.module.css'
 import { getLandingData, saveLandingData } from "../../API/LandingAPI"
 import { createRule, getRules, removeRule, updateRule } from "../../API/RulesAPI"
+import { FileType } from "../../../../enums/FileType"
+import { FileCategory } from "../../../../enums/FileCategory"
+import { createFiles, filesStorageURL, getFiles } from "../../API/filesAPI"
 const optionsList: string[] = ['При входе', 'В котокафе','Посещение с детьми','Аллергия']
+
 
 function EditLanding() {
     const [landingData, setLandingData] =  useState<LandingData>()
+    const [files, setFiles] = useState<MyFile[]>([])
     const [rules, setRules] = useState<Rule[]>([])
     const [editedRule, setEditedRule] = useState<Rule | null>(null)
     const [ruleForm, setRuleForm] = useState<Omit<Rule, 'id'>>({
         category: optionsList[0], 
         text: ''
     })
+
     function loadData() {
         getLandingData().then((data)=>{
             setLandingData(data)
@@ -22,6 +28,9 @@ function EditLanding() {
         getRules().then((data)=>{
             setRules(data)
         }).catch((err)=>console.error('loading rules mistake: ', err))
+        getFiles().then((data: MyFile[])=>{
+            setFiles(data.filter((file)=>file.category === FileCategory.LANDING_PHOTO))
+        })
     }
 
     useEffect(()=> {loadData()}, [])
@@ -40,6 +49,7 @@ function EditLanding() {
             [name]: value
         }))
     }
+
     const handleEditChange = (e: ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (!editedRule) return;
@@ -49,6 +59,22 @@ function EditLanding() {
         })
     }
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const dto = {
+                category: FileCategory.LANDING_PHOTO,
+                type: FileType.PHOTO, 
+                is_approved: true,
+            }
+            try {
+                await createFiles([file], dto)
+                loadData()
+            } catch (error) {
+                console.error('Ошибка при загрузке файла:', error);
+            }
+        }
+    }
     
     async function addNewRule(e: React.FormEvent) {
         e.preventDefault()
@@ -72,10 +98,9 @@ function EditLanding() {
         e.preventDefault()
         if (!editedRule) return
         try{
-            await updateRule({
-                category: editedRule.category,
-                text: editedRule.text
-            }, editedRule.id)
+            
+            const {id, ...result} = editedRule
+            await updateRule(result, editedRule.id)
             setEditedRule(null); 
             loadData();           
             } catch (err) {
@@ -234,8 +259,40 @@ function EditLanding() {
                                 onChange={(e)=>handleChangeLanding(LandingItemType.GROUP_CONDITIONS, e.target.value)} 
                             />
                         </div>
-                    </fieldset>
 
+                        <div className={galleryStyles.fileUploadContainer}>
+                            <label htmlFor="cat-file-upload" className={galleryStyles.fileUploadLabel}>
+                                <span> Фото для главной страницы (нажмите, чтобы загрузить) </span>
+                            </label>
+                            <input 
+                                type="file" 
+                                accept="image/*"
+                                id="cat-file-upload"
+                                className={galleryStyles.fileUploadInput}
+                                onChange={handleFileChange}
+                            />
+                        </div> 
+
+                        <div className={galleryStyles.previewContainer}>
+                            {files.map((file, index) => (
+                                <div key={`${file.name}-${index}`} className={galleryStyles.previewItem}>
+                                    <img src={`${filesStorageURL}/${file.path}`} alt={file.name}/>
+                                    <button
+                                        type="button"
+                                        onClick={ async () =>{
+                                        try {
+                                                await removeRule(file.id);
+                                                loadData();                
+                                            } catch (error) {
+                                                console.error('Ошибка при удалении файла:', error);
+                                            }
+                                        }}
+                                        className={galleryStyles.deleteButton}
+                                    > ✕ </button>
+                                </div>
+                            ))}
+                        </div>
+                    </fieldset>
                     <button type="submit">Сохранить изменения</button>
                 </form>
             </section>
@@ -326,9 +383,7 @@ function EditLanding() {
                                     </div>
 
                                     <div className={s.actions}>
-                                        <button
-                                            onClick={() => setEditedRule({ ...rule })}
-                                        >
+                                        <button onClick={() => setEditedRule({ ...rule })}>
                                             Редактировать
                                         </button>
 

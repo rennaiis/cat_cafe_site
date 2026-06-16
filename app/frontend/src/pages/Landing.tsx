@@ -7,7 +7,7 @@ import { FileCategory } from '../../../enums/FileCategory'
 import { useEffect, useState } from 'react'
 import { getLandingData } from '../API/LandingAPI'
 import { getRules } from '../API/RulesAPI'
-import { getFiles } from '../API/filesAPI'
+import { filesStorageURL, getFiles } from '../API/filesAPI'
 
 function Landing(){ 
     function loadData() {
@@ -38,7 +38,7 @@ function Landing(){
                 <div className={s.rowPhotos}>
                     {files.filter((_, id)=>id%2 !== 0).map((photo, idx)=>(
                         <div className='photo-card' key = {`${idx}-${photo.id}`}>
-                            <img   className='photo'  src={`${photo.path}/${photo.name}`} alt="row1" />
+                            <img className='photo'  src={`${filesStorageURL}/${photo.path}`} alt="row1" />
                         </div>
                     ))}
                 </div>
@@ -47,7 +47,7 @@ function Landing(){
                 <div className={s.rowPhotos}>
                     {files.filter((_, id)=>id%2 === 0).map((photo, idx)=>(
                         <div className='photo-card' key = {`${idx}-${photo.id}`}>
-                            <img className='photo' src={`${photo.path}/${photo.name}`} alt="row2" />
+                            <img className='photo' src={`${filesStorageURL}/${photo.path}`} alt="row2" />
                         </div>
                     ))}
                 </div>

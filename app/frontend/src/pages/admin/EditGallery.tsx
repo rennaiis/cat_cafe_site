@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { approveFile, filesStorageURL, getFiles, removeFile } from '../../API/filesAPI';
+import { approveFile, createFiles, filesStorageURL, getFiles, removeFile } from '../../API/filesAPI';
 import galleryStyles from '../../styles/gallery.module.css';
 import s from '../../styles/admin.module.css'
 
+
 import type { MyFile } from '../../types';
 import { FileCategory } from '../../../../enums/FileCategory';
+import { FileType } from '../../../../enums/FileType';
 function EditGallery(){
-    function loadData() {
+    function loadData(){
         getFiles().then((data: MyFile[])=>{
             setApprovedFiles(data.filter((file)=> file.is_approved === true && file.category === FileCategory.GALLERY_PHOTO))
             setNewFiles(data.filter((file)=> file.is_approved !== true && file.category === FileCategory.GALLERY_PHOTO))
@@ -19,6 +21,22 @@ function EditGallery(){
     async function approveGalleryFile(id: number) {
         await approveFile(id)
         loadData()
+    }
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const dto = {
+                category: FileCategory.GALLERY_PHOTO,
+                type: FileType.PHOTO, 
+                is_approved: true,
+            }
+            try {
+                await createFiles([file], dto)
+                loadData()
+            } catch (error) {
+                console.error('Ошибка при загрузке файла:', error);
+            }
+        }
     }
     useEffect(()=> {loadData()}, [])
     const [approvedfiles, setApprovedFiles] = useState<MyFile[]>([])
@@ -44,6 +62,18 @@ function EditGallery(){
                 ))}
             </div>
             <h3>Файлы галереи</h3>
+                <div className={galleryStyles.fileUploadContainer}>
+                    <label htmlFor="cat-file-upload" className={galleryStyles.fileUploadLabel}>
+                        <span> Прикрепить фото кота (нажмите, чтобы загрузить) </span>
+                    </label>
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        id="cat-file-upload"
+                        className={galleryStyles.fileUploadInput}
+                        onChange={handleFileChange}
+                    />
+                </div> 
                 <div className={galleryStyles.previewContainer}>
                     {approvedfiles.map((file, index) => (
                         <div key={`${file.name}-${index}`} className={galleryStyles.previewItem}>

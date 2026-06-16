@@ -21,14 +21,14 @@ function EditLanding() {
         text: ''
     })
 
-    function loadData() {
-        getLandingData().then((data)=>{
+    async function loadData() {
+        await getLandingData().then((data)=>{
             setLandingData(data)
         }).catch((err)=>console.error('loading landing mistake: ', err))
-        getRules().then((data)=>{
+        await getRules().then((data)=>{
             setRules(data)
         }).catch((err)=>console.error('loading rules mistake: ', err))
-        getFiles().then((data: MyFile[])=>{
+        await getFiles().then((data: MyFile[])=>{
             setFiles(data.filter((file)=>file.category === FileCategory.LANDING_PHOTO))
         })
     }

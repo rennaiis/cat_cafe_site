@@ -12,6 +12,7 @@
     --very-dark-color: #4f270f;
     --light-stroke-color: #FFFFFF;
     --elements-background-color: #ffe7d3;
+    --elements-highlignt-color: #eabd99;
     --orange-color: #e9a16e;
     --light-borders: f0f0f0;
     --light-text-color: #af886e;
@@ -147,7 +148,7 @@ button:hover{
 .card{
     background-color: var(--elements-background-color);
     border-radius: 15px;
-    padding: 10px;
+    padding: 1rem;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
 .row{
@@ -155,9 +156,7 @@ button:hover{
     flex-direction: row;
     gap:2em
 }
-.card-content{
-    padding: 2em
-}
+
 .content-block{
     padding: 5%;
 }
@@ -191,21 +190,7 @@ nav a{
     color: inherit;
     display: inline-block;
 }
-.photo-card{
-    width: 280px;
-    height: 200px;
-    flex-shrink: 0;
-}
-.photo-card img{
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    border-color: var(--elements-background-color);
-    border-width: 8px;
-    border-radius: 12px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-}
+
 .paw-icon{
     height: 2em;
     flex-shrink: 0;

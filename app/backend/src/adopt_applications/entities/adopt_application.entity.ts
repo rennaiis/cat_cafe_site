@@ -9,14 +9,14 @@ export class AdoptApplication {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(()=>Adopter, (adopter)=>adopter.adopt_applications, {nullable: false})
+    @ManyToOne(()=>Adopter, (adopter)=>adopter.adopt_applications, {nullable: false, onDelete: 'CASCADE'})
     @JoinColumn({name: 'adopter_id'})
     adopter: Adopter
 
     @OneToMany(()=>Answer, (answer)=>answer.application)
     answers?: Answer[]
 
-    @ManyToOne(()=>Cat, (cat)=>cat.adopt_applications, {nullable: false})
+    @ManyToOne(()=>Cat, (cat)=>cat.adopt_applications, {nullable: false, onDelete: "CASCADE"})
     cat: Cat
 
     @Column({

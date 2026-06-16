@@ -33,11 +33,11 @@ export class FileEntity {
     })
     category: FileCategory
 
-    @ManyToOne(()=>Cat, {nullable: true, onDelete: 'SET NULL'})
+    @ManyToOne(()=>Cat, {nullable: true, onDelete: 'CASCADE'})
     @JoinColumn({name: 'cat_id'})
     cat?: null | Cat;
 
-    @ManyToOne(()=>ColorType, {nullable: true, onDelete: 'SET NULL'})
+    @ManyToOne(()=>ColorType, {nullable: true, onDelete: 'CASCADE'})
     @JoinColumn({name: 'color_type_id'})
     colorType?: null | ColorType;
 }

@@ -15,7 +15,7 @@ function Header(){
         }).catch((err)=>console.error('loading header mistake: ', err))
     }, []) 
     if (!landingData){
-        return <div>Загрузка...</div>
+        return <div></div>
     }
     return (  
         <header className={s.headerBack}>

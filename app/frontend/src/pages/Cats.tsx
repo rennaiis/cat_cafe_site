@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom"
 function Cats(){
     const [cats, setCats] = useState<Cat[]>([])
     const navigate = useNavigate()
-    function loadData() {
-        getCats().then((data)=>{
+    async function loadData() {
+        await getCats().then((data)=>{
             setCats(data)
         }).catch((err)=>console.error('loading cats mistake: ', err))
         }

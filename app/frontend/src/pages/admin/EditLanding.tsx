@@ -7,7 +7,7 @@ import { getLandingData, saveLandingData } from "../../API/LandingAPI"
 import { createRule, getRules, removeRule, updateRule } from "../../API/RulesAPI"
 import { FileType } from "../../../../enums/FileType"
 import { FileCategory } from "../../../../enums/FileCategory"
-import { createFiles, filesStorageURL, getFiles } from "../../API/filesAPI"
+import { createFiles, filesStorageURL, getFiles, removeFile } from "../../API/filesAPI"
 const optionsList: string[] = ['При входе', 'В котокафе','Посещение с детьми','Аллергия']
 
 
@@ -115,7 +115,7 @@ function EditLanding() {
     } 
     
     if (!landingData) {
-        return <div>Загрузка...</div>; 
+        return <div></div>; 
     }
     return (
         <main className={s.container}>
@@ -281,7 +281,7 @@ function EditLanding() {
                                         type="button"
                                         onClick={ async () =>{
                                         try {
-                                                await removeRule(file.id);
+                                                await removeFile(file.id);
                                                 loadData();                
                                             } catch (error) {
                                                 console.error('Ошибка при удалении файла:', error);

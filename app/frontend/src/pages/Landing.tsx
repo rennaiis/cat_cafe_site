@@ -10,8 +10,8 @@ import { getRules } from '../API/RulesAPI'
 import { filesStorageURL, getFiles } from '../API/filesAPI'
 
 function Landing(){ 
-    function loadData() {
-        getFiles().then((data: MyFile[])=>{
+    async function loadData() {
+        await getFiles().then((data: MyFile[])=>{
             setFiles(data.filter((file)=>file.category === FileCategory.LANDING_PHOTO))
         }).catch((err)=>console.error('loading files mistake: ', err))
     }

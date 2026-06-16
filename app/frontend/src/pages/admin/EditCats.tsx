@@ -20,14 +20,14 @@ function EditCats(){
     const [statuses, setStatuses] = useState<Status[]>([])
     const [cats, setCats] = useState<Cat[]>([])
     const [adopters, setAdopters] = useState<Adopter[]>([])
-    function loadData() {
-        getStatuses().then((data)=>{
+    async function loadData() {
+        await getStatuses().then((data)=>{
             setStatuses(data)
         }).catch((err)=>console.error('loading statuses mistake: ', err))
-        getCats().then((data)=>{
+        await getCats().then((data)=>{
             setCats(data)
         }).catch((err)=>console.error('loading cats mistake: ', err))
-        getAdopters().then((data)=>{
+        await getAdopters().then((data)=>{
             setAdopters(data)
         }).catch((err)=>console.error('loading adopters mistake: ', err))
     }
@@ -70,7 +70,7 @@ function EditCats(){
             if (statusForm.status !== ''){
                 await createStatus(statusForm)
             }
-            loadData()
+            await loadData()
             setStatusForm({
                 status: '', 
                 color: '#FFFFFF', 
@@ -88,7 +88,7 @@ function EditCats(){
             const {id, ...result} = editedStatus
             await updateStatus(result, editedStatus.id)
             setEditedStatus(null); 
-            loadData();           
+            await loadData();           
             } catch (err) {
                 console.error("edit error", err);
             }
@@ -106,7 +106,7 @@ function EditCats(){
                 adopter_id: result.adopter?.id
             }, editedCat.id)
             setEditedCat(null); 
-            loadData();           
+            await loadData();           
             } catch (err) {
                 console.error("edit error", err);
             }
@@ -173,9 +173,9 @@ function EditCats(){
                         </div>
                 </div>
                 <div className={s.actions}>
-                    <button onClick={()=>{
-                        removeCat(cat.id)
-                        loadData()
+                    <button onClick={async ()=>{
+                        await removeCat(cat.id)
+                        await loadData()
                     }
                     }>Удалить</button>
                     <button onClick={()=>{setEditedCat(cat)}}>Редактировать</button>
@@ -298,7 +298,7 @@ function EditCats(){
                                             type="button"
                                             onClick={async () => {
                                                 await removeStatus(status.id);
-                                                loadData();
+                                                await loadData();
                                             }}
                                         >
                                             Удалить

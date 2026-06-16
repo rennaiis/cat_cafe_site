@@ -16,15 +16,15 @@ function Gallery () {
             }
             try {
                 await createFiles([file], dto)
-                loadData()
+                await loadData()
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
             }
         }
     }
     
-    function loadData() {
-        getFiles().then((data)=>{
+    async function loadData() {
+        await getFiles().then((data)=>{
             setFiles(data)
         }).catch((err)=>console.error('loading rules mistake: ', err))
     }

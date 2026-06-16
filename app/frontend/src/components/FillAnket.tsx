@@ -11,8 +11,8 @@ interface fillAnketProps{
 
 function FillAnket({applicationId}: fillAnketProps){
     const navigate = useNavigate()
-    function loadData() {
-        getQuestions().then((data)=>{
+    async function loadData() {
+        await getQuestions().then((data)=>{
             setQuestions(data)
             const initialAnswers = data.map((q: Question) => ({
                 answer: '',

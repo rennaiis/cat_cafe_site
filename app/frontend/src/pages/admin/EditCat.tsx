@@ -16,8 +16,8 @@ function EditCat(){
     const [cat, setCat] = useState<Cat | null>(null)
     const navigate = useNavigate()
 
-    function loadData() {
-        getCats().then((data: Cat[]) => {
+    async function loadData() {
+        await getCats().then((data: Cat[]) => {
             const foundCat = data.find((c) => c.id === Number(id));
             if (foundCat) {
                 setCat({
@@ -44,7 +44,7 @@ function EditCat(){
             }
             try {
                 await createFiles([file], dto)
-                loadData()
+                await loadData()
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
             }
@@ -94,7 +94,7 @@ function EditCat(){
                 birth_date: cat.birth_date ? new Date(cat.birth_date).toISOString().split('T')[0] : undefined,
             }, cat.id)
             navigate(-1)
-            loadData()            
+            await loadData()            
         } catch (err) {
             console.error('create error', err)
         }
@@ -102,7 +102,7 @@ function EditCat(){
 
 
     if (!cat){
-        return(<div>Загрузка...</div>)
+        return(<></>)
     }
     return(
         <main className={s.container}>
@@ -200,7 +200,7 @@ function EditCat(){
                                 onClick={ async () =>{
                                    try {
                                         await removeFile(file.id);
-                                        loadData();                
+                                        await loadData();                
                                     } catch (error) {
                                         console.error('Ошибка при удалении файла:', error);
                                     }

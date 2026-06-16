@@ -10,8 +10,8 @@ interface FillDataProps {
 }
 
 function FillData({onNext}:FillDataProps){
-    function loadData() {
-        getCats().then((data: Cat[])=>{
+    async function loadData() {
+        await getCats().then((data: Cat[])=>{
             const catsInCafe  = data.filter(cat => cat.status?.type === StatusType.IN_CAFE)
             setCats(catsInCafe)
             }).catch((err)=>console.error('loading cats mistake: ', err))

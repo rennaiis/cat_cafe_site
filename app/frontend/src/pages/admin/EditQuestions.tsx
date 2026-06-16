@@ -8,8 +8,8 @@ import { createQuestion, getQuestions, removeQuestion, updateQuestion } from '..
 
 function ApplicationQuestions() {
 
-    function loadData() {
-        getQuestions().then((data)=>{
+    async function loadData() {
+        await getQuestions().then((data)=>{
             setQuestions(data)
         }).catch((err)=>console.error('loading questions mistake: ', err))
     }
@@ -63,7 +63,7 @@ function ApplicationQuestions() {
             if (newQuestion.question_text !=""){
                 await createQuestion(newQuestion)
             }
-            loadData()
+            await loadData()
             setNewQuestion({
                 question_text: '', 
                 variants: [], 
@@ -83,7 +83,7 @@ function ApplicationQuestions() {
             const {id, ...result} = editedQuestion
             await updateQuestion(result, editedQuestion.id)
             setEditedQuestion(null)
-            loadData()           
+            await loadData()           
             } catch (err) {
                 console.error("edit error", err);
         }
@@ -334,7 +334,7 @@ function ApplicationQuestions() {
                                     
                                     onClick={async () => {
                                         await removeQuestion(question.id)
-                                        loadData()
+                                        await loadData()
                                     }}>Удалить</button>
                                 </div>
                             </>

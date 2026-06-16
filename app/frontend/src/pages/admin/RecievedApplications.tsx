@@ -45,7 +45,7 @@ const RecievedApplications: React.FC = () => {
                 contact: editedAdopter.contact
             }, editedAdopter.id)
             setEditedAdopter(null); 
-            loadData();           
+            await loadData();           
             } catch (err) {
                 console.error("edit error", err)
             }
@@ -59,11 +59,6 @@ const RecievedApplications: React.FC = () => {
     };
 
     
-    if (!applications || !adopters){
-        return (
-            <div>Загрузка...</div>
-        )
-    }
     return (
         <main className={styles.container }>
             <section>
@@ -95,15 +90,15 @@ const RecievedApplications: React.FC = () => {
                             <div className={`${styles.gridTd} ${styles.actions}`} data-label="Действия">
                                 <button type="button" onClick={async () => {
                                     await approveApplication(app.id)
-                                    loadData()
+                                    await loadData()
                                 }}>Одобрить</button>
                                 <button type="button" onClick={async () => {
                                     await rejectApplication(app.id)
-                                    loadData()
+                                    await loadData()
                                 }}>Отклонить</button>
                                 <button type="button" onClick={async () => {
                                     await removeAdoptApplication(app.id)
-                                    loadData()                               
+                                    await loadData()                               
                                     }}>Удалить</button>
                                 <button type="button" onClick={() => toggleAnswers(app.id)}>
                                     {expandedRows[app.id] ? 'Скрыть ответы' : 'Показать ответы'}
@@ -232,7 +227,7 @@ const RecievedApplications: React.FC = () => {
                                 }>Редактировать</button></div>
                                 <div><button type="button" onClick={async()=>{
                                     await removeAdopter(adopter.id)
-                                    loadData()
+                                    await loadData()
                                 }}>Удалить</button></div>
                             </div>        
                         </Fragment>

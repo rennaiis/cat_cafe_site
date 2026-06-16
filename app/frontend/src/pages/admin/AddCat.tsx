@@ -26,14 +26,14 @@ function AddCat(){
         birth_date: undefined, 
         files: []
     })
-    function loadData() {
-        getStatuses().then((data)=>{
+    async function loadData() {
+        await getStatuses().then((data)=>{
             setStatuses(data)
             if (data.length > 0) {
                 setNewCat(prev => ({ ...prev, status: data[0] }))
             }
         }).catch((err)=>console.error('loading statuses mistake: ', err))
-        getAdopters().then((data)=>{
+        await getAdopters().then((data)=>{
             setAdopters(data)
         }).catch((err)=>console.error('loading adopters mistake: ', err))
     }
@@ -93,7 +93,6 @@ function AddCat(){
 
     async function addNewCat(e: React.FormEvent) {
         e.preventDefault()
-        
         try {
             if (!newCat.name || !newCat.status) {
                 return

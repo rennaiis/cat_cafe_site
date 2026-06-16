@@ -16,8 +16,8 @@ function CatPage() {
             day: 'numeric'
         });
     }
-    function loadData() {
-        getCats().then((data: Cat[])=>{
+    async function loadData() {
+        await getCats().then((data: Cat[])=>{
             const foundCat = data.find((c)=>c.id === Number(id))
             if (foundCat){
                 setCat(foundCat)

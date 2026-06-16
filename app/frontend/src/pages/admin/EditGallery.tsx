@@ -8,19 +8,19 @@ import type { MyFile } from '../../types';
 import { FileCategory } from '../../../../enums/FileCategory';
 import { FileType } from '../../../../enums/FileType';
 function EditGallery(){
-    function loadData(){
-        getFiles().then((data: MyFile[])=>{
+    async function loadData(){
+        await getFiles().then((data: MyFile[])=>{
             setApprovedFiles(data.filter((file)=> file.is_approved === true && file.category === FileCategory.GALLERY_PHOTO))
-            setNewFiles(data.filter((file)=> file.is_approved !== true && file.category === FileCategory.GALLERY_PHOTO))
+            setNewFiles(data.filter((file)=> file.is_approved === false && file.category === FileCategory.GALLERY_PHOTO))
         }).catch((err)=>console.error('loading rules mistake: ', err))
     }
     async function deleteFile(id: number) {
         await removeFile(id)
-        loadData()
+        await loadData()
     }
     async function approveGalleryFile(id: number) {
         await approveFile(id)
-        loadData()
+        await loadData()
     }
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -32,7 +32,7 @@ function EditGallery(){
             }
             try {
                 await createFiles([file], dto)
-                loadData()
+                await loadData()
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
             }
@@ -50,12 +50,12 @@ function EditGallery(){
                         <img src={`${filesStorageURL}/${file.path}`}/>
                         <button
                             type="button"
-                            onClick={() => deleteFile(file.id)}
+                            onClick={async () => await deleteFile(file.id)}
                             className={galleryStyles.deleteButton}
                         > ✕ </button>
                         <button
                             type="button"
-                            onClick={() => approveGalleryFile(file.id)}
+                            onClick={async () => await approveGalleryFile(file.id)}
                             className={galleryStyles.approveButton}
                         > ✓  </button>
                     </div>

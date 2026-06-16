@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react" 
-import { calculateAge, catsListTest } from "../test/testCatsList"
-import type { Cat, MyFile } from "../types"
+import type { Cat } from "../types"
 import s from '../styles/cats.module.css'
 import { StatusType } from "../../../enums/StatusType"
-import  CatPage from "./CatPage"
-import { getCats } from "../API/CatsAPI"
+import { calculateAge, getCats } from "../API/CatsAPI"
 import { filesStorageURL } from "../API/filesAPI"
 import { useNavigate } from "react-router-dom"
 

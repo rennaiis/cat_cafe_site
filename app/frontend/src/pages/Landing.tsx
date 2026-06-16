@@ -4,23 +4,20 @@ import pawIcon1 from '../assets/paw-icon-1.png'
 import pawIcon2 from '../assets/paw-icon-2.png'
 import board from '../assets/board2.png'
 import { FileCategory } from '../../../enums/FileCategory'
-import { rulesTest } from '../test/testLandingData'
-import { filesListTest } from '../test/testFiles'
 import { useEffect, useState } from 'react'
 import { getLandingData } from '../API/LandingAPI'
 import { getRules } from '../API/RulesAPI'
+import { getFiles } from '../API/filesAPI'
 
-// const picUrl = "http://localhost:3000/passportFiles/"
-const picUrl = './photos'
-const photos_list: MyFile[] = filesListTest.filter(f => f.category === FileCategory.LANDING_PHOTO)
+function Landing(){ 
+    function loadData() {
+        getFiles().then((data: MyFile[])=>{
+            setFiles(data.filter((file)=>file.category === FileCategory.LANDING_PHOTO))
+        }).catch((err)=>console.error('loading files mistake: ', err))
+    }
+    useEffect(()=> {loadData()}, []) 
 
-
-const row1 = photos_list.filter((_, id)=>id%2 !== 0)
-const row2 = photos_list.filter((_, id)=>id%2 === 0)
-const dubleRow1 = [...row1, ...row1, ...row1]
-const dubleRow2 = [...row2, ...row2, ...row2]
-
-function Landing(){   
+    const [files, setFiles] = useState<MyFile[]>([])
     const [landingData, setLandingData] =  useState<LandingData>()
     const [rules, setRules] =  useState<Rule[]>([])
     useEffect(()=>{
@@ -39,7 +36,7 @@ function Landing(){
         <div className={s.galleryContainer}>
             <div className={s.rowWrapper} >
                 <div className={s.rowPhotos}>
-                    {dubleRow1.map((photo, idx)=>(
+                    {files.filter((_, id)=>id%2 !== 0).map((photo, idx)=>(
                         <div className='photo-card' key = {`${idx}-${photo.id}`}>
                             <img   className='photo'  src={`${photo.path}/${photo.name}`} alt="row1" />
                         </div>
@@ -48,7 +45,7 @@ function Landing(){
             </div>
             <div className={s.rowWrapper} >
                 <div className={s.rowPhotos}>
-                    {dubleRow2.map((photo, idx)=>(
+                    {files.filter((_, id)=>id%2 === 0).map((photo, idx)=>(
                         <div className='photo-card' key = {`${idx}-${photo.id}`}>
                             <img className='photo' src={`${photo.path}/${photo.name}`} alt="row2" />
                         </div>

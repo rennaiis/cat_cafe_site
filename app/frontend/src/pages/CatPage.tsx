@@ -1,10 +1,9 @@
 import type { Cat } from "../types"
 import style from "../styles/catPage.module.css" 
-import { calculateAge} from "../test/testCatsList";
 import { filesStorageURL } from "../API/filesAPI";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCats } from "../API/CatsAPI";
+import { calculateAge, getCats } from "../API/CatsAPI";
 
 function CatPage() {
     const {id} = useParams<{id: string}>()

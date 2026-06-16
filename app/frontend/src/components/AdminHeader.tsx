@@ -15,7 +15,6 @@ function AdminHeader(){
                 <button className={s.navButton}><NavLink to={'/admin/recievedApplications'}>Заявки</NavLink></button>
                 <button className={s.navButton}><NavLink to={'/admin/editUsers'}>Пользователи</NavLink></button>
                 <button className={s.navButton}><NavLink to={'/admin/editQuestions'}>Редактировать анкету</NavLink></button>
-                <button className={s.navButton}><NavLink to={'/admin/clients'}>Учёт посетителей</NavLink></button>
             </nav>
          </header>
         </>

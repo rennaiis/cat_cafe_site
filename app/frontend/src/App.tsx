@@ -11,7 +11,6 @@ import EditUsers from './pages/admin/EditUsers'
 import RecievedApplications from './pages/admin/RecievedApplications'
 import ApplicationQuestions from './pages/admin/EditQuestions'
 import EditGallery from './pages/admin/EditGallery'
-import CLients from './pages/admin/Clients'
 import AddCat from './pages/admin/AddCat'
 import AdoptApplicationForm from './pages/AdoptApplication'
 import CatPage from './pages/CatPage'
@@ -42,7 +41,6 @@ const router = createBrowserRouter([
          {path: 'recievedApplications', element: <RecievedApplications/>}, 
          {path: 'editQuestions', element: <ApplicationQuestions/>}, 
          {path: 'editGallery', element:<EditGallery/>},
-         {path: 'clients', element: <CLients/>}, 
          {path: 'newCat', element: <AddCat/>}
       ]
    }

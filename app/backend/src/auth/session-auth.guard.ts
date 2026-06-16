@@ -18,9 +18,6 @@ export class SessionAuthGuard extends AuthGuard('session'){
             return true
         }
         const request = context.switchToHttp().getRequest()
-        if (request.method === 'GET'){
-            return true
-        }
         return super.canActivate(context)
         
     }

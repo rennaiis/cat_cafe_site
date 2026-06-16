@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'dotenv/config'
 import { ValidationPipe } from '@nestjs/common';
@@ -8,6 +8,7 @@ import * as session from 'express-session'
 import passport from 'passport';
 import { UsersService } from './users/users.service';
 import { makeInitialUsers } from './seed';
+import { SessionAuthGuard } from './auth/session-auth.guard';
 
 
 async function bootstrap() {
@@ -18,7 +19,7 @@ async function bootstrap() {
     forbidNonWhitelisted: true
   }))
   app.enableCors({
-    origin: true,
+    origin: 'http://localhost:5173',
     credentials: true
   })
   app.useStaticAssets(join(process.cwd(), 'catFiles'), {
@@ -35,7 +36,8 @@ async function bootstrap() {
   app.use(passport.session())
   const usersService = app.get(UsersService)
   await makeInitialUsers(usersService)
-  
+  const reflector = app.get(Reflector)
+  app.useGlobalGuards(new SessionAuthGuard(reflector))
   await app.listen(process.env.BACKEND_PORT || 3000);
   
 }

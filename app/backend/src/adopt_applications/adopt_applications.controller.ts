@@ -13,12 +13,13 @@ export class AdoptApplicationsController {
   create(@Body() createAdoptApplicationDto: CreateAdoptApplicationDto) {
     return this.adoptApplicationsService.create(createAdoptApplicationDto);
   }
-
+  @Public()
   @Get()
   findAll() {
     return this.adoptApplicationsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adoptApplicationsService.findOne(+id);

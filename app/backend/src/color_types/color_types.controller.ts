@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ColorTypesService } from './color_types.service';
 import { CreateColorTypeDto } from './dto/create-color_type.dto';
 import { UpdateColorTypeDto } from './dto/update-color_type.dto';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('color-types')
 export class ColorTypesController {
@@ -11,12 +12,14 @@ export class ColorTypesController {
   create(@Body() createColorTypeDto: CreateColorTypeDto) {
     return this.colorTypesService.create(createColorTypeDto);
   }
-
+  
+  @Public()
   @Get()
   findAll() {
     return this.colorTypesService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.colorTypesService.findOne(+id);

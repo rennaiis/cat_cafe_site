@@ -15,6 +15,7 @@ import AddCat from './pages/admin/AddCat'
 import AdoptApplicationForm from './pages/AdoptApplication'
 import CatPage from './pages/CatPage'
 import EditCat from './pages/admin/EditCat'
+import AdminRoute from './components/AdminRoute'
 
 const router = createBrowserRouter([
    {
@@ -42,6 +43,26 @@ const router = createBrowserRouter([
          {path: 'editQuestions', element: <ApplicationQuestions/>}, 
          {path: 'editGallery', element:<EditGallery/>},
          {path: 'newCat', element: <AddCat/>}
+      ]
+   },
+   {
+      element: <AdminRoute/>,
+      children: [
+         {
+            path: '/admin', 
+            element: <AdminLayout/>, 
+            children: [
+               {index: true, element: <EditLanding/>},
+               {path: 'editCats', element: <EditCats/>},
+               {path: 'editCats/:id', element: <EditCat/>},
+               {path: 'editLanding', element: <EditLanding/>}, 
+               {path: 'editUsers', element: <EditUsers/>}, 
+               {path: 'recievedApplications', element: <RecievedApplications/>}, 
+               {path: 'editQuestions', element: <ApplicationQuestions/>}, 
+               {path: 'editGallery', element:<EditGallery/>},
+               {path: 'newCat', element: <AddCat/>}
+            ]  
+         }
       ]
    }
 ])

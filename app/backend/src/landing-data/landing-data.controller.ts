@@ -2,11 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LandingDataService } from './landing-data.service';
 import { UpdateLandingDataDto } from './dto/update-landing-data.dto';
 import { LandingItemType } from '../../../enums/LandingItemType';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('landing-data')
 export class LandingDataController {
   constructor(private readonly landingDataService: LandingDataService) {}
-
+  @Public()
   @Get()
   findAll() {
     return this.landingDataService.findAll();

@@ -3,6 +3,7 @@ import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('cats')
 export class CatsController {
@@ -23,12 +24,13 @@ export class CatsController {
       )
 }
 
-
+  @Public()
   @Get()
   findAll() {
     return this.catsService.findAll();
   }
-
+  
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.catsService.findOne(+id);

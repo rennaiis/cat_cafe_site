@@ -25,6 +25,8 @@ export class FilesController {
       })
     }*/)
   )
+
+  @Public()
   async uploadFiles(
     @UploadedFiles() files: Express.Multer.File[], 
     @Body() createFileDto: CreateFileDto
@@ -32,11 +34,13 @@ export class FilesController {
     return await this.filesService.createMany(files, createFileDto)
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.filesService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.filesService.findOne(+id);

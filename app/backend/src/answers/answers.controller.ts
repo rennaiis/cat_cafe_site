@@ -2,21 +2,22 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('answers')
 export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
-
+  @Public()
   @Post()
   create(@Body() createAnswerDto: CreateAnswerDto) {
     return this.answersService.create(createAnswerDto);
   }
-
+  @Public()
   @Get()
   findAll() {
     return this.answersService.findAll();
   }
-
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.answersService.findOne(+id);

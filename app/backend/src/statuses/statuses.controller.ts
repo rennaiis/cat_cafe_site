@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { StatusesService } from './statuses.service';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('statuses')
 export class StatusesController {
@@ -12,11 +13,12 @@ export class StatusesController {
     return this.statusesService.create(createStatusDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.statusesService.findAll();
   }
-
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.statusesService.findOne(+id);

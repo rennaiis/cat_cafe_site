@@ -36,25 +36,21 @@
 ### Заявка на пристройство 
 <img width="1881" height="838" alt="image" src="https://github.com/user-attachments/assets/32bf8e19-a488-4a11-8ebb-2ffea4d4a7ea" />
 <img width="1876" height="842" alt="image" src="https://github.com/user-attachments/assets/ab24fde2-d9f6-4953-8081-4e18069d7c1e" />
-![Uploading image.png…]()
+<img width="1886" height="827" alt="image" src="https://github.com/user-attachments/assets/9c25f0c4-c0d0-4466-8ff9-30e009166b07" />
 
 ### Модуль адимнистратора. Вход (логин, пароль) 
 <img width="833" height="654" alt="image" src="https://github.com/user-attachments/assets/c8a8273a-88e5-4f7f-82b2-89eff31b0ba5" />
-### Котики и их редактирование 
-котики (админ)
+
+### Редактирование информации (котики, хозяева, лэндинг, правила, галерея)
 <img width="1560" height="889" alt="image" src="https://github.com/user-attachments/assets/19854684-c4d9-45bc-a220-de0933fd8777" />
-статусы (админ) 
 <img width="1568" height="735" alt="image" src="https://github.com/user-attachments/assets/7c7b6728-2cf3-4a40-a3e7-48f7ec3631fe" />
-правила (админ) 
-<img width="1595" height="837" alt="image" src="https://github.com/user-attachments/assets/43fdf632-a21a-47f7-9b09-103dd7a98c0e" />
-заявки (админ)
-<img width="1599" height="797" alt="image" src="https://github.com/user-attachments/assets/6d338bc2-1a6a-4ca4-bdcf-7f0ce0d19171" />
-вопросы (админ) 
-<img width="1584" height="881" alt="image" src="https://github.com/user-attachments/assets/c814ce3f-54a6-4b62-beea-62898e063f4f" />
-лэндинг (админ) 
 <img width="1543" height="826" alt="image" src="https://github.com/user-attachments/assets/267edbbc-196f-448c-940b-529d7b9c58d8" />
-галерея (админ)
 <img width="1511" height="713" alt="image" src="https://github.com/user-attachments/assets/00a38595-88b6-434e-aba9-3436f8428abd" />
+<img width="1595" height="837" alt="image" src="https://github.com/user-attachments/assets/43fdf632-a21a-47f7-9b09-103dd7a98c0e" />
+
+###  Управление анкетой и заявками 
+<img width="1599" height="797" alt="image" src="https://github.com/user-attachments/assets/6d338bc2-1a6a-4ca4-bdcf-7f0ce0d19171" />
+<img width="1584" height="881" alt="image" src="https://github.com/user-attachments/assets/c814ce3f-54a6-4b62-beea-62898e063f4f" />
 
 ### Схема базы данных проекта 
 <img width="1214" height="828" alt="catCafe" src="https://github.com/user-attachments/assets/1a5a1cf7-68a9-417c-86b4-8ab9947df88d" />

@@ -8,19 +8,22 @@ import type { MyFile } from '../../types';
 import { FileCategory } from '../../../../enums/FileCategory';
 import { FileType } from '../../../../enums/FileType';
 function EditGallery(){
-    async function loadData(){
-        await getFiles().then((data: MyFile[])=>{
+    function loadData(){
+        getFiles().then((data: MyFile[])=>{
+            console.log(data);
             setApprovedFiles(data.filter((file)=> file.is_approved === true && file.category === FileCategory.GALLERY_PHOTO))
+        }).catch((err)=>console.error('loading rules mistake: ', err))
+        getFiles().then((data: MyFile[])=>{
             setNewFiles(data.filter((file)=> file.is_approved === false && file.category === FileCategory.GALLERY_PHOTO))
         }).catch((err)=>console.error('loading rules mistake: ', err))
     }
     async function deleteFile(id: number) {
         await removeFile(id)
-        await loadData()
+        loadData()
     }
     async function approveGalleryFile(id: number) {
         await approveFile(id)
-        await loadData()
+        loadData()
     }
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -32,7 +35,7 @@ function EditGallery(){
             }
             try {
                 await createFiles([file], dto)
-                await loadData()
+                loadData()
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
             }

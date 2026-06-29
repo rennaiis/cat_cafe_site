@@ -9,6 +9,8 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    navigate('/admin');
+
 
     try {
       const response = await fetch('http://localhost:3000/auth/login', {

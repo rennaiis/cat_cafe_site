@@ -1,6 +1,7 @@
 import s from '../styles/catApplication.module.css'
 import { useEffect, useState } from "react"
 import type { Answer, Question } from "../types"
+import adminStyles from '../styles/admin.module.css'
 import { getQuestions } from "../API/QuestionsAPI"
 import { createAnswer } from '../API/AnswersAPI'
 import { useNavigate } from 'react-router-dom'
@@ -68,6 +69,7 @@ function FillAnket({applicationId}: fillAnketProps){
     }
     return(
         <div className="content-block">
+            <div className={adminStyles.contentBlock}>
             <h3>Ответьте на вопросы анкеты</h3>
             <form className={s.formAnket} onSubmit={sendAnket}>
                 {questions.map((question)=>{
@@ -112,6 +114,7 @@ function FillAnket({applicationId}: fillAnketProps){
                 {isSent ? <h2>Ваша заявка успешно отправлена!</h2>:<></>}
                 <button>Отправить</button>
             </form>
+            </div>
         </div>
     )
 }

@@ -1,6 +1,4 @@
 import logo from '../assets/logo_no_background.png'
-import left_paw from '../assets/long-paw-1.png'
-import right_paw from '../assets/long-paw-2.png'
 import { NavLink } from 'react-router-dom'
 import s from '../styles/header.module.css'
 import { useEffect, useState } from 'react'

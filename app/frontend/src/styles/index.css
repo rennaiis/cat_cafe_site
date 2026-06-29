@@ -109,7 +109,7 @@ a {
     transition: 0.3s all ease;
 }
 .scale:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 .bold-hover{
      transition: 0.3s all ease;
@@ -158,7 +158,10 @@ button:hover{
 }
 
 .content-block{
-    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
 }
 nav{
     display: flex;

@@ -11,6 +11,9 @@
     position: relative;
 }
 
+.contentBlockLanding{
+    padding: 10px;
+}
 .galleryContainer {
     display: flex;
     flex-direction: column;
@@ -120,6 +123,7 @@
 .mapCard{
     aspect-ratio: 4/3;
     border-radius: 15px;
+    max-height: 300px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     border: 8px solid white;
 }
@@ -168,7 +172,9 @@
 .contactsContainer{
     display: flex;
     flex-direction: column;
-    gap: 1.5rem
+    gap: 1.5rem;
+    width: 100%;
+
 }
 
 
@@ -181,6 +187,11 @@
     }
     .contactsContainer{
         flex-direction: row;
-}
+    }
+    .contentBlockLanding{
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+
 }
 

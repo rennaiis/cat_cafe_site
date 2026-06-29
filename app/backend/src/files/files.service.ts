@@ -67,7 +67,8 @@ export class FilesService {
           category: createFileDto.category,
           type: createFileDto.type,
           cat: createFileDto.cat_id ? ({ id: createFileDto.cat_id } as Cat) : undefined,
-          colorType: attachedColorType
+          colorType: attachedColorType, 
+          is_approved: createFileDto.is_approved
         })
         const saved = await repository.save(newFile)
         return saved

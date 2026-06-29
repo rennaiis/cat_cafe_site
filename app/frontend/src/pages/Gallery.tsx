@@ -6,6 +6,7 @@ import { FileCategory } from '../../../enums/FileCategory';
 import { createFiles, filesStorageURL, getFiles } from '../API/filesAPI';
 
 function Gallery () {
+    const [isSent, setIsSent] = useState<boolean>(false)
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
                 const file = e.target.files[0];
@@ -16,21 +17,24 @@ function Gallery () {
             }
             try {
                 await createFiles([file], dto)
-                await loadData()
+                loadData()
+                setIsSent(true)
             } catch (error) {
                 console.error('Ошибка при загрузке файла:', error);
+                alert('Не удалось загрузить фото :( ')
             }
         }
     }
     
-    async function loadData() {
-        await getFiles().then((data)=>{
-            setFiles(data)
+    function loadData() {
+        getFiles().then((data: MyFile[])=>{
+            setFiles(data.filter(file => file.type === FileType.PHOTO && file.category == FileCategory.GALLERY_PHOTO && file.is_approved))
+            
         }).catch((err)=>console.error('loading rules mistake: ', err))
+ 
     }
     useEffect(()=> {loadData()}, [])
     const [files, setFiles] = useState<MyFile[]>([])
-    const approvedImages = files.filter(file => file.type === FileType.PHOTO && file.category == FileCategory.GALLERY_PHOTO && file.is_approved);
     return (
         <>
         <div className={styles.galleryContainer}>    
@@ -45,9 +49,12 @@ function Gallery () {
                     className={styles.fileUploadInput}
                     onChange={handleFileChange}
                 />            
-            </div>        
+            </div>
+            {isSent ? 
+                <div style={{padding: 20}}> Фото отправлены, отобразятся после одобрения ❤️</div>        
+            : <></>}
             <div className={styles.grid}>
-                {approvedImages.map((file) => (
+                {files.map((file) => (
                     <div key={file.id} className={styles.card}>
                         <div className={styles.imageWrapper}>
                             <img 

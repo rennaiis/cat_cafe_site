@@ -204,7 +204,7 @@ function AddCat(){
                         name='adopter'
                         value={newCat.adopter?.id || ''}
                         onChange={handleRelationChange('adopter', adopters)}
-                        required>
+                        >
                         {adopters.map((option) => (
                             <option key={option.id} value={option.id}>
                                 {option.first_name + " " + option.last_name}

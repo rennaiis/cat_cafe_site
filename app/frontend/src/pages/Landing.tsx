@@ -53,7 +53,7 @@ function Landing(){
                 </div>
             </div>
         </div>
-        <div className='content-block'>
+        <div className={s.contentBlockLanding}>
             <div className={s.about + ' row '}>
             
             <div className={s.aboutContent}>

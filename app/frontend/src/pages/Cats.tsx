@@ -17,7 +17,7 @@ function Cats(){
     useEffect(()=> {loadData()}, [])
     
     return (
-        <main>
+        <main className='content-block'>
         <h4 className={s.header + ' scale'}>Наши котики</h4>
         <div className={s.cats} >
             {cats.filter(cat => cat.status?.type === StatusType.IN_CAFE).map((cat, idx)=>(

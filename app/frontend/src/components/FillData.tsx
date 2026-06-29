@@ -46,7 +46,8 @@ function FillData({onNext}:FillDataProps){
     return (
         <>
         <main className="content-block">
-            <h3>Выберите котика</h3>
+            <div className={adminStyles.contentBlock}>
+                 <h3>Выберите котика</h3>
             <div className={s.cats} >
             {cats.map((cat, idx)=>(
                 <div     
@@ -125,6 +126,8 @@ function FillData({onNext}:FillDataProps){
 
                 <button className={s.submitButton} type="submit">Далее</button>
             </form>
+            </div>
+           
         </main>
         </>
     )

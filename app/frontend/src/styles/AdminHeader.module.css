@@ -30,6 +30,8 @@
 @media (max-width: 768px) {
     .adminHeader{
         justify-content: space-between;
+        box-shadow: none;
+
     }
     .burgerButton {
         display: block;
@@ -38,13 +40,14 @@
     .nav {
         display: none; 
         flex-direction: column;
+        z-index: 1000;
         position: absolute;
         top: 70px; 
         left: 0;
         width: 100%;
         background-color: var(--elements-background-color);
         padding: 20px;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 10px -4px rgba(0,0,0,0.1);
     }
 
     .nav.active {

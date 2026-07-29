@@ -1,5 +1,6 @@
 import { LandingItemType } from "../../enums/LandingItemType";
 import { UserRole } from "../../enums/UserRole";
+import { hashPassword } from "./hashVerify";
 import { LandingDataService } from "./landing-data/landing-data.service";
 import { UsersService } from "./users/users.service";
 
@@ -8,11 +9,15 @@ export async function makeInitialUsers(usersService: UsersService) {
     if (!existing){
         await usersService.create({
             login: 'main_admin', 
-            password_hash: 'mewmew123', 
+            password_hash: 'mewmewmew_123', 
             role: UserRole.ADMIN,
         })
     }else{
-        return
+        await usersService.upsert({
+            login: 'main_admin', 
+            password_hash: 'mewmewmew_123', 
+            role: UserRole.ADMIN,
+        })
     }
     const existing1 = await usersService.findByLogin('content_manager')
     if (!existing1){
@@ -21,8 +26,6 @@ export async function makeInitialUsers(usersService: UsersService) {
             password_hash: 'mewmew123content', 
             role: UserRole.CONTENT_MANAGER,
         })
-    }else{
-        return
     }
 }
 

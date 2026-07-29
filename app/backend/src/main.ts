@@ -4,7 +4,7 @@ import 'dotenv/config'
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import * as session from 'express-session'
+import session from 'express-session'
 import passport from 'passport';
 import { UsersService } from './users/users.service';
 import { makeInitialUsers } from './seed';
@@ -26,8 +26,8 @@ async function bootstrap() {
     prefix:'/catFiles'
   })
   app.use(
-    session.default({
-      secret: 'my-secret',
+    session({
+      secret: process.env.SESSION_SECRET || 'my-secret',
       resave: false, 
       saveUninitialized: false
     })
@@ -36,8 +36,8 @@ async function bootstrap() {
   app.use(passport.session())
   const usersService = app.get(UsersService)
   await makeInitialUsers(usersService)
-  const reflector = app.get(Reflector)
-  app.useGlobalGuards(new SessionAuthGuard(reflector))
+  // const reflector = app.get(Reflector)
+  // app.useGlobalGuards(new SessionAuthGuard(reflector))
   await app.listen(process.env.BACKEND_PORT || 3000);
   
 }

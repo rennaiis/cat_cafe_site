@@ -41,7 +41,8 @@ import { SessionAuthGuard } from './auth/session-auth.guard';
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD, 
-    useClass: SessionAuthGuard
+    useClass: SessionAuthGuard, 
+    
   }],
 })
 export class AppModule {}

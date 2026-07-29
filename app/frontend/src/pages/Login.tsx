@@ -18,7 +18,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: login, password }),
+        body: JSON.stringify({login, password }),
       });
 
       if (response.ok) {
@@ -36,7 +36,7 @@ function Login() {
   return (
     <div className={s.overlay}>
       <form className={s.loginCard + ' card'} onSubmit={handleSubmit}>
-        <p className='row'>
+        <div className='row'>
           <label htmlFor='login'>Логин</label>
           <input 
             id="login" 
@@ -45,8 +45,8 @@ function Login() {
             onChange={(e) => setLogin(e.target.value)}
             required
           />
-        </p>
-        <p className='row'>
+        </div>
+        <div className='row'>
           <label htmlFor="password">Пароль</label>
           <input 
             type="password" 
@@ -55,7 +55,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </p>
+        </div>
         <button type="submit" className={s.submitButton}>Войти</button>
       </form>
     </div>

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { RulesService } from './rules.service';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
+import { Public } from '../auth/session-auth.guard';
 
 @Controller('rules')
 export class RulesController {
@@ -12,11 +13,14 @@ export class RulesController {
     return this.rulesService.create(createRuleDto);
   }
 
+
+  @Public()
   @Get()
   findAll() {
     return this.rulesService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.rulesService.findOne(+id);

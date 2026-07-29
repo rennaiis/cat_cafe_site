@@ -1,24 +1,19 @@
-import { ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { AuthGuard } from "@nestjs/passport";
-import { SetMetadata } from "@nestjs/common"
+import { CanActivate, ExecutionContext, Injectable, SetMetadata } from "@nestjs/common"
+import { Reflector } from "@nestjs/core"
+import { Request } from "express"
 export const IS_PUBLIC_KEY = 'isPublic'
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true)
 
 @Injectable()
-export class SessionAuthGuard extends AuthGuard('session'){
-    constructor(private reflector: Reflector){
-        super()
-    }
-    canActivate(context: ExecutionContext) {
+export class SessionAuthGuard implements CanActivate{
+    constructor(private reflector: Reflector){}
+    canActivate(context: ExecutionContext): boolean {
         const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-            context.getHandler(), context.getClass()
+            context.getHandler(), 
+            context.getClass()
         ])
-        if (isPublic){
-            return true
-        }
-        const request = context.switchToHttp().getRequest()
-        return super.canActivate(context)
-        
+        if (isPublic) return true;
+        const req = context.switchToHttp().getRequest<Request>()
+        return req.isAuthenticated()
     }
 }

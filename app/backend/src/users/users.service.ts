@@ -44,17 +44,29 @@ export class UsersService {
     return user
   }
 
-async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.findOne(id); 
+
+  async update(id: number, updateUserDto: UpdateUserDto) {
+      const user = await this.findOne(id); 
+      if (updateUserDto.password_hash) {
+        updateUserDto.password_hash = await hashPassword(updateUserDto.password_hash);
+      }
+      this.userRepository.merge(user, updateUserDto);
+      return await this.userRepository.save(user);
+    }
+
+  async upsert(updateUserDto: UpdateUserDto){
     if (updateUserDto.password_hash) {
       updateUserDto.password_hash = await hashPassword(updateUserDto.password_hash);
     }
-    this.userRepository.merge(user, updateUserDto);
-    return await this.userRepository.save(user);
+    await this.userRepository.upsert({
+      login: updateUserDto.login,
+      password_hash: updateUserDto.password_hash,
+      role: updateUserDto.role
+    }, ['login'])
   }
 
-  async remove(id: number) {
-    const user = await this.findOne(id);
-    return await this.userRepository.softRemove(user);
+    async remove(id: number) {
+      const user = await this.findOne(id);
+      return await this.userRepository.softRemove(user);
+    }
   }
-}

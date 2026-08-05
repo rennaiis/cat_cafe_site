@@ -1,6 +1,6 @@
 import type { Status } from "../types";
 
-const URL = "http://localhost:3000/statuses"
+const URL = `${import.meta.env.BACKEND_API}/statuses`
 
 export async function getStatuses() {
    const res =  await fetch(URL, {

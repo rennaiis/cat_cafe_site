@@ -1,5 +1,5 @@
 import type { Cat, CatDto } from "../types";
-const URL = "http://localhost:3000/cats"
+const URL = `${import.meta.env.BACKEND_API}/cats`
 
 export const getYearsAgo = (years: number): Date => {
     const date = new Date();

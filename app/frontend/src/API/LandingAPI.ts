@@ -1,6 +1,7 @@
 import type { LandingData } from "../types";
 
-const URL = "http://localhost:3000/landing-data"
+const URL = `${import.meta.env.BACKEND_API}/landing-data`
+
 export async function getLandingData() {
    const res =  await fetch(URL, {
       credentials: 'include',

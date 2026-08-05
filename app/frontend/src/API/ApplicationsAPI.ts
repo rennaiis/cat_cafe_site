@@ -1,7 +1,6 @@
 import { ApplicationStatus } from "../../../enums/ApplicationStatus";
 import type { AdoptApplication, AdoptApplicationDto } from "../types";
-
-const URL = "http://localhost:3000/adopt-applications"
+const URL = `${import.meta.env.BACKEND_API}/adopt-applications`
 
 export async function getAdoptApplications() {
    const res =  await fetch(URL, {

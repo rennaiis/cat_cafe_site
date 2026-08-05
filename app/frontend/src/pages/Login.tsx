@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from '../styles/login.module.css';
+import { meta } from 'zod/v4/core';
 
 function Login() {
   const [login, setLogin] = useState('');
@@ -13,7 +14,7 @@ function Login() {
 
 
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch(`${import.meta.env.BACKEND_API}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

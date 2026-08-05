@@ -1,6 +1,6 @@
 import type { Adopter } from "../types";
 
-const URL = "http://localhost:3000/adopters"
+const URL = `${import.meta.env.BACKEND_API}/adopters`
 
 export async function getAdopters() {
    const res =  await fetch(URL, {

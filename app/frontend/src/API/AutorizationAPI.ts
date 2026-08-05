@@ -1,4 +1,4 @@
-const URL = "http://localhost:3000/auth/me"
+const URL = `${import.meta.env.BACKEND_API}/auth/me`
 export async function authMe() {
    const res =  await fetch(URL, {
       credentials: 'include',

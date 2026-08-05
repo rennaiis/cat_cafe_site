@@ -1,6 +1,5 @@
 import type { Rule } from "../types";
-
-const URL = "http://localhost:3000/rules"
+const URL = `${import.meta.env.BACKEND_API}/rules`
 
 export async function getRules() {
    const res =  await fetch(URL, {

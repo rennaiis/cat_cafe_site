@@ -1,6 +1,5 @@
 import type { AnswerDTO } from "../types";
-
-const URL = "http://localhost:3000/answers"
+const URL = `${import.meta.env.BACKEND_API}/answers`
 
 export async function getAnswers() {
    const res =  await fetch(URL, {

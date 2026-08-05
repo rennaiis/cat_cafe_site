@@ -1,7 +1,7 @@
 import type { FileDto } from "../types"
 
-const URL = "http://localhost:3000/files"
-export const filesStorageURL = "http://localhost:3000/catFiles"
+const URL = `${import.meta.env.BACKEND_API}/files`
+export const filesStorageURL = `${import.meta.env.BACKEND_API}/catFiles`
 
 export async function getFiles() {
    const res =  await fetch(URL, {

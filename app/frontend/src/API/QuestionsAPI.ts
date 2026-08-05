@@ -1,6 +1,6 @@
 import type { Question} from "../types";
 
-const URL = "http://localhost:3000/questions"
+const URL = `${import.meta.env.BACKEND_API}/questions`
 
 export async function getQuestions() {
    const res =  await fetch(URL, {

@@ -1,6 +1,6 @@
 import type { User } from "../types";
 
-const URL = "http://localhost:3000/users"
+const URL = `${import.meta.env.BACKEND_API}/users`
 
 export async function getUsers() {
    const res =  await fetch(URL, {
